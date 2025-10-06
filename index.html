@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <base href="./">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="정준우 — 온라인 명함">
+  <meta property="og:site_name" content="정준우 Portfolio">
+  <meta name="theme-color" content="#072e48">
+  <link rel="manifest" href="manifest.json">
+  <!-- GitHub Pages friendly: use relative paths and a base href so assets load from the repo root -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>정준우, [준썸, junsome]</title>
+  <meta name="description" content="정준우 — 서울 사진 · 영상 제작자. 모바일에 최적화된 온라인 명함 + 작품 활동 지도" />
+  <style>
+    /* fonts */
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+@font-face { font-family: 'JoseonGulim'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff'); font-weight: normal; font-display: swap; }
+
+:root{ --bg-a:#081025; --bg-b:#072e48; --glass:rgba(255,255,255,0.04); --muted:#9fb2c8; --accent:#ffd6a6; --card-radius:28px; --text:#eaf2fb }
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:'Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,var(--bg-a),var(--bg-b));color:var(--text);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:18px}
+
+/* top bar: logo + menu + lang */
+.app-header{position:fixed;left:12px;right:12px;top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:120}
+.app-header .left{display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--accent);font-weight:700;text-decoration:none}
+.menu{display:flex;gap:8px;align-items:center}
+.menu button{background:transparent;border:0;color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
+.menu button.active{background:var(--glass);color:var(--text);font-weight:700}
+.lang{display:flex;gap:6px}
+.lang button{background:var(--glass);border:0;color:var(--muted);padding:6px 10px;border-radius:8px}
+
+/* main container (rounded card) */
+.container{width:980px;max-width:98vw;border-radius:calc(var(--card-radius));overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));backdrop-filter:blur(6px);display:grid;grid-template-columns:420px 1fr;min-height:560px;padding:0;border-radius:calc(var(--card-radius));}
+@media (max-width:880px){.container{grid-template-columns:1fr;min-height:640px}}
+
+/* card left/right */
+.hero-left{padding:20px;display:flex;align-items:center;justify-content:center}
+.portrait{width:240px;height:240px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(2,6,23,0.6)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-right{padding:28px 36px;display:flex;flex-direction:column;gap:14px}
+.meta h1{margin:0;font-size:36px;font-family:'Wanted Sans',system-ui,Roboto,sans-serif;font-weight:800}
+.role{color:var(--muted)}
+.desc{color:var(--muted);font-family:'JoseonGulim',serif}
+.contact-chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.02);color:var(--text);text-decoration:none}
+
+/* keep button/chip styles exactly as they are - DO NOT CHANGE */
+.btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;color:var(--text);background:transparent}
+.btn.primary{background:linear-gradient(180deg,var(--accent),#ffb57a);color:var(--bg-a)}
+
+/* portfolio view */
+.portfolio{width:980px;max-width:98vw;border-radius:calc(var(--card-radius));overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));backdrop-filter:blur(6px);min-height:560px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.portfolio .map-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.map-inner{touch-action:none;cursor:grab}
+.map-inner.grabbing{cursor:grabbing}
+.seoul-map{max-width:100%;height:auto;width:calc(100% - 40px);display:block}
+.seoul-map .district{fill:#081628;stroke:#2f5a7a;stroke-width:1.6;cursor:pointer;transition:fill .18s,transform .12s}
+.seoul-map .district:hover{fill:#123a55;transform:translateY(-2px)}
+
+/* detail panel */
+.detail-panel{position:fixed;left:12px;right:12px;top:84px;bottom:12px;background:linear-gradient(180deg,rgba(8,16,37,0.98),rgba(8,16,37,0.95));border-radius:12px;padding:18px;display:none;flex-direction:column;z-index:140;overflow:auto}
+.detail-panel.active{display:flex}
+.detail-panel .head{display:flex;align-items:center;justify-content:space-between}
+.detail-panel .content{margin-top:12px;color:var(--muted);display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.project-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:10px;border-radius:10px}
+.project-card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.project-card h4{margin:8px 0 4px}
+.project-card p{margin:0;color:var(--muted);font-size:13px}
+
+/* utility */
+.hidden{display:none}
+.card-foot{padding:10px 16px;color:var(--muted);font-size:13px;text-align:center}
+@media (max-width:480px){.meta h1{font-size:24px}.portrait{width:62vw;height:62vw}}
+
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="left">
+      <a class="logo" href="#" aria-label="홈"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden><rect x="2" y="2" width="20" height="20" rx="5" fill="#fff" opacity="0.06"></rect><path d="M6 8h12M6 14h12" stroke="#fff" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"></path></svg><span style="color:var(--accent)">정준우</span></a>
+    </div>
+    <nav class="menu" role="tablist" aria-label="메뉴">
+      <button id="tab-card" class="active" role="tab">명함</button>
+      <button id="tab-portfolio" role="tab">작품 활동</button>
+    </nav>
+    <div class="lang">
+      <button id="btn-ko" class="active">한국어</button>
+      <button id="btn-en">English</button>
+    </div>
+  </header>
+
+  <!-- card view -->
+  <main id="card-view" class="container" role="main" aria-labelledby="title">
+    <section class="hero-left"><div class="portrait"><img id="portrait-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQw...AAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" alt="정준우 사진"></div></section>
+    <section class="hero-right">
+      <div class="meta"><h1 id="title">정준우</h1><div class="role" id="role">서울 사진 · 영상 제작자</div></div>
+      <p class="desc" id="desc" style="margin-bottom:20px">다양한 서울을 사진과 영상으로 표현합니다.</p>
+      <h3 style="margin:0 0 8px 0;color:var(--muted);font-size:14px">Contact</h3>
+      <div class="contact-chips">
+        <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
+        <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
+        <a class="chip" id="instagram" href="https://instagram.com/_junsome" target="_blank" rel="noopener">@_junsome</a>
+      </div>
+      <div style="margin-top:12px"><button class="chip" id="download-vcard">vCard 다운로드</button> <button class="chip" id="copy-email">이메일 복사</button></div>
+    </section>
+    <div class="card-foot">Made with care • 정준우 — Responsive · Mobile-optimized</div>
+  </main>
+
+  <!-- portfolio view (hidden by default) -->
+  <section id="portfolio-view" class="portfolio hidden" aria-hidden="true">
+    <h2 style="margin:6px 0;color:var(--text)">작품 활동 — 서울 지도로 보기</h2>
+    <div class="map-wrap">
+      <div id="map-inner" class="map-inner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+        <div id="svg-container" style="width:100%;max-width:1000px"></div>
+      </div>
+    </div>
+    <div style="color:var(--muted);font-size:13px">지도에서 구를 터치(또는 클릭)하면 해당 구의 작품 목록 패널이 열립니다.</div>
+  </section>
+
+  <!-- district detail panel (shows inside app) -->
+  <aside id="detail" class="detail-panel" role="dialog" aria-hidden="true">
+    <div class="head"><strong id="detail-title" style="font-size:20px;color:var(--text)"></strong><div style="display:flex;gap:8px"><button id="open-detail-page" class="chip">상세 페이지 열기</button><button id="close-detail" class="chip">닫기</button></div></div>
+    <div class="content" id="detail-content">로딩 중...</div>
+  </aside>
+
+  <script>
+    // helper
+    const $ = id => document.getElementById(id);
+
+    // Tabs: card / portfolio
+    const tabCard = $('tab-card');
+    const tabPortfolio = $('tab-portfolio');
+    const cardView = $('card-view');
+    const portfolioView = $('portfolio-view');
+
+    function showCard(){ tabCard.classList.add('active'); tabPortfolio.classList.remove('active'); cardView.classList.remove('hidden'); cardView.setAttribute('aria-hidden','false'); portfolioView.classList.add('hidden'); portfolioView.setAttribute('aria-hidden','true'); }
+    function showPortfolio(){ tabPortfolio.classList.add('active'); tabCard.classList.remove('active'); portfolioView.classList.remove('hidden'); portfolioView.setAttribute('aria-hidden','false'); cardView.classList.add('hidden'); cardView.setAttribute('aria-hidden','true'); }
+
+    tabCard && tabCard.addEventListener('click', showCard);
+    tabPortfolio && tabPortfolio.addEventListener('click', showPortfolio);
+
+    // Projects data (sample) - map by svg element id or name fallback
+    const projects = {
+      jongno: [ {title:'종로 프로젝트 A', img:'', desc:'전시 및 다큐멘터리 작업'}, {title:'종로 프로젝트 B', img:'', desc:'야경 촬영 시리즈'} ],
+      mapo: [ {title:'마포 스트리트', img:'', desc:'도시 풍경 사진전'}, {title:'마포 영상', img:'', desc:'뮤직비디오 촬영'} ],
+      yongsan: [ {title:'용산 포트폴리오', img:'', desc:'도심 속 인물 사진'} ],
+      seodaemun: [ {title:'서대문 다큐', img:'', desc:'지역 기록 사진'} ],
+      gangnam: [ {title:'강남 광고 촬영', img:'', desc:'상업 촬영 프로젝트'}, {title:'강남 영상', img:'', desc:'브랜딩 영상'} ],
+      songpa: [ {title:'송파 밤경치', img:'', desc:'도시 야경 사진전'} ]
+    };
+
+    // localStorage helpers for user submissions
+    function submissionsKey(id){ return 'submissions_' + id; }
+    function loadSubmissions(id){ try{ const raw = localStorage.getItem(submissionsKey(id)); return raw ? JSON.parse(raw) : []; }catch(e){ return []; } }
+    function saveSubmissions(id, arr){ localStorage.setItem(submissionsKey(id), JSON.stringify(arr)); }
+
+    // render submissions and existing projects into detail content
+    function renderDetailContent(id, name){
+      const content = $('detail-content');
+      // clear
+      content.innerHTML = '';
+
+      // upload form
+      const form = document.createElement('div'); form.style.marginBottom = '12px';
+      form.innerHTML = `
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008));padding:12px;border-radius:10px">
+          <h3 style="margin:0 0 8px 0;color:var(--text)">내 작품 등록</h3>
+          <p style="color:var(--muted);margin:0 0 8px 0">사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.</p>
+          <div style="display:flex;gap:8px;flex-direction:column">
+            <input id="upload-title" placeholder="작품 제목" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)">
+            <textarea id="upload-desc" placeholder="간단한 설명" rows="3" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)"></textarea>
+            <input id="upload-file" type="file" accept="image/*" style="color:var(--text)">
+            <div style="display:flex;gap:8px;align-items:center"><button id="submit-upload" class="btn primary">업로드</button><div id="upload-preview" style="width:84px;height:64px;border-radius:8px;background:rgba(255,255,255,0.02);display:none;overflow:hidden"><img id="preview-img" src="" style="width:100%;height:100%;object-fit:cover"></div></div>
+          </div>
+        </div>
+      `;
+      content.appendChild(form);
+
+      // existing sample projects
+      const sampleWrap = document.createElement('div'); sampleWrap.style.marginTop='8px';
+      sampleWrap.innerHTML = `<h4 style="color:var(--text);margin:8px 0">일반 프로젝트</h4>`;
+      const sampleGrid = document.createElement('div'); sampleGrid.style.display='grid'; sampleGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; sampleGrid.style.gap='12px';
+      const key = id && id.toLowerCase();
+      const list = projects[key] || projects[name] || [];
+      list.forEach(p=>{
+        const c = document.createElement('div'); c.className='project-card';
+        c.innerHTML = `<img src="${p.img || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23081e2f\'/><text x=\'50%\' y=\'50%\' fill=\'%23fff\' font-size=\'24\' text-anchor=\'middle\'>${encodeHTML(p.title)}</text></svg>'}" alt="${escapeAttr(p.title)}"><h4>${escapeHTML(p.title)}</h4><p>${escapeHTML(p.desc)}</p>`;
+        sampleGrid.appendChild(c);
+      });
+      content.appendChild(sampleWrap); content.appendChild(sampleGrid);
+
+      // user submissions
+      const subs = loadSubmissions(id || name || 'global');
+      const userWrap = document.createElement('div'); userWrap.style.marginTop='12px'; userWrap.innerHTML = `<h4 style="color:var(--text);margin:8px 0">커뮤니티 업로드</h4>`;
+      const userGrid = document.createElement('div'); userGrid.style.display='grid'; userGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; userGrid.style.gap='12px';
+      subs.forEach(s=>{
+        const card = createSubmissionCard(s, id || name || 'global');
+        userGrid.appendChild(card);
+      });
+      content.appendChild(userWrap); content.appendChild(userGrid);
+
+      // setup upload handlers
+      const uploadFile = $('upload-file');
+      const previewBox = $('upload-preview');
+      const previewImg = $('preview-img');
+      uploadFile && uploadFile.addEventListener('change', (e)=>{
+        const f = e.target.files && e.target.files[0];
+        if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.');
+        const r = new FileReader(); r.onload = ()=>{ previewImg.src = r.result; previewBox.style.display = 'block'; }; r.readAsDataURL(f);
+      });
+
+      const submitBtn = $('submit-upload');
+      submitBtn && submitBtn.addEventListener('click', async ()=>{
+        const title = $('upload-title').value.trim() || '무제';
+        const desc = $('upload-desc').value.trim() || '';
+        const fileInput = $('upload-file');
+        if(!fileInput || !fileInput.files || !fileInput.files[0]) return alert('업로드할 이미지를 선택하세요.');
+        const f = fileInput.files[0];
+        const dataUrl = await fileToDataURL(f);
+        const arr = loadSubmissions(id || name || 'global');
+        const item = {id: 's_' + Date.now(), title, desc, img: dataUrl, createdAt: Date.now()};
+        arr.unshift(item); saveSubmissions(id || name || 'global', arr);
+        // re-render user grid
+        const newCard = createSubmissionCard(item, id || name || 'global');
+        userGrid.insertBefore(newCard, userGrid.firstChild);
+        // reset form
+        $('upload-title').value = ''; $('upload-desc').value = ''; fileInput.value = ''; previewBox.style.display='none'; previewImg.src='';
+      });
+    }
+
+    function escapeHTML(s){ return (s+'').replace(/[&<>\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    function escapeAttr(s){ return escapeHTML(s).replace(/'/g, '&#39;'); }
+    function encodeHTML(s){ return encodeURIComponent((s||'').replace(/&/g,'&amp;')); }
+
+    function createSubmissionCard(item, key){
+      const c = document.createElement('div'); c.className='project-card';
+      c.innerHTML = `<img src="${item.img}" alt="${escapeAttr(item.title)}"><h4>${escapeHTML(item.title)}</h4><p>${escapeHTML(item.desc)}</p>`;
+      // actions: edit, delete
+      const actions = document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px'; actions.style.marginTop='8px';
+      const editBtn = document.createElement('button'); editBtn.className='chip'; editBtn.textContent='수정';
+      const delBtn = document.createElement('button'); delBtn.className='chip'; delBtn.textContent='삭제';
+      actions.appendChild(editBtn); actions.appendChild(delBtn); c.appendChild(actions);
+
+      editBtn.addEventListener('click', ()=>{ openEditDialog(item, key, c); });
+      delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')){ const arr = loadSubmissions(key); const idx = arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr.splice(idx,1); saveSubmissions(key,arr); c.remove(); } } });
+      return c;
+    }
+
+    function openEditDialog(item, key, cardElement){
+      // small inline edit form
+      const form = document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px';
+      const title = document.createElement('input'); title.value = item.title; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)';
+      const desc = document.createElement('textarea'); desc.value = item.desc; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)';
+      const file = document.createElement('input'); file.type='file'; file.accept='image/*';
+      const save = document.createElement('button'); save.className='btn primary'; save.textContent='저장';
+      const cancel = document.createElement('button'); cancel.className='btn'; cancel.textContent='취소';
+      form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel);
+      cardElement.appendChild(form);
+
+      let newDataUrl = null;
+      file.addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload=()=>{ newDataUrl = r.result; }; r.readAsDataURL(f); });
+      cancel.addEventListener('click', ()=>{ form.remove(); });
+      save.addEventListener('click', ()=>{
+        const arr = loadSubmissions(key);
+        const idx = arr.findIndex(x=>x.id===item.id);
+        if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newDataUrl) arr[idx].img = newDataUrl; saveSubmissions(key,arr); // update card DOM
+          cardElement.querySelector('h4').textContent = arr[idx].title; cardElement.querySelector('p').textContent = arr[idx].desc; cardElement.querySelector('img').src = arr[idx].img; form.remove(); }
+      });
+    }
+
+    function fileToDataURL(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }); }
+
+    // long-press tooltip helpers (used for mobile hints)
+    let longPressTimer = null;
+    function startLongPress(e, name){ clearTimeout(longPressTimer); longPressTimer = setTimeout(()=>{ const t = document.createElement('div'); t.textContent = name; t.style.position='fixed'; t.style.left=(e.clientX+8)+'px'; t.style.top=(e.clientY+8)+'px'; t.style.padding='6px 8px'; t.style.background='rgba(0,0,0,0.6)'; t.style.color='white'; t.style.borderRadius='6px'; t.style.zIndex='200'; document.body.appendChild(t); setTimeout(()=>t.remove(),900); },600); }
+    function clearLongPress(){ clearTimeout(longPressTimer); }
+
+    // ----------------- Subpage management: create 25 subpages and map to districts -----------------
+    function ensureSubpages(count){
+      let meta = null;
+      try{ meta = JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta = null; }
+      if(!meta || !Array.isArray(meta.pages) || meta.pages.length < count){
+        meta = { pages: [] };
+        for(let i=1;i<=count;i++){
+          const id = 'subpage_' + i;
+          meta.pages.push({id, title: '하위 페이지 ' + i, assignedTo: null});
+          // ensure storage key exists
+          if(localStorage.getItem(submissionsKey(id)) === null) localStorage.setItem(submissionsKey(id), JSON.stringify([]));
+        }
+        localStorage.setItem('subpages_meta', JSON.stringify(meta));
+      }
+      return meta;
+    }
+
+    function getOrAssignSubpageForDistrict(districtId, districtName){
+      if(!districtId) return districtId || districtName;
+      let meta = null;
+      try{ meta = JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta = null; }
+      if(!meta || !Array.isArray(meta.pages)) meta = ensureSubpages(25);
+      let page = meta.pages.find(p=>p.assignedTo === districtId);
+      if(!page){
+        page = meta.pages.find(p=>!p.assignedTo);
+        if(page){ page.assignedTo = districtId; if(districtName) page.title = districtName; localStorage.setItem('subpages_meta', JSON.stringify(meta)); }
+        else { // no free pages, fallback to districtId key
+          return districtId;
+        }
+      }
+      return page.id;
+    }
+
+    // open district detail (overrides previous) - now assigns a subpage and renders upload UI for that subpage
+    function openDistrictDetail(id,name){
+      const detail = $('detail');
+      const pageKey = getOrAssignSubpageForDistrict(id, name);
+      $('detail-title').textContent = name || pageKey;
+      renderDetailContent(pageKey, name);
+      detail.classList.add('active'); detail.setAttribute('aria-hidden','false');
+
+      // set open-detail action to generate a standalone page (includes user submissions)
+      $('open-detail-page').onclick = ()=>{ const key = pageKey; const list = loadSubmissions(key).concat(projects[(id||'').toLowerCase()]||projects[name]||[]); generateDetailPage(key,name,list); };
+    }
+
+    // ----------------- SVG loading and interaction -----------------
+    const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Seoul_districts.svg';
+
+    async function loadSVG(){
+      const container = $('svg-container');
+      if(!container) return;
+      try{
+        const res = await fetch(SVG_URL);
+        if(!res.ok) throw new Error('SVG fetch failed: ' + res.status);
+        const text = await res.text();
+        container.innerHTML = text;
+        const svg = container.querySelector('svg');
+        if(svg){ svg.classList.add('seoul-map'); attachDistrictHandlers(svg); }
+      }catch(err){
+        console.warn('SVG load failed, falling back to embedded map', err);
+        container.innerHTML = `<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="서울 지도"> <g id="districts"> <path id="jongno" class="district" data-name="종로구" d="M220,120 L380,110 L420,200 L310,240 L230,200 Z" /> <path id="mapo" class="district" data-name="마포구" d="M120,260 L260,260 L260,360 L140,380 L110,330 Z" /> <path id="yongsan" class="district" data-name="용산구" d="M360,260 L480,260 L520,340 L380,380 L340,320 Z" /> <path id="seodaemun" class="district" data-name="서대문구" d="M180,200 L260,200 L260,260 L180,280 L150,230 Z" /> <path id="gangnam" class="district" data-name="강남구" d="M520,520 L740,520 L760,700 L540,720 L500,640 Z" /> <path id="songpa" class="district" data-name="송파구" d="M740,420 L880,420 L900,600 L760,620 L740,540 Z" /> </g></svg>`;
+        const svg = container.querySelector('svg'); if(svg) attachDistrictHandlers(svg);
+      }
+    }
+
+    function attachDistrictHandlers(svg){
+      try{
+        const nodes = svg.querySelectorAll('[id]');
+        nodes.forEach(n=>{
+          if(!n.classList.contains('district')) n.classList.add('district');
+          n.style.touchAction = 'manipulation';
+          n.addEventListener('click', (e)=>{ e.preventDefault(); const id = n.id || ''; const name = n.getAttribute('data-name') || n.getAttribute('inkscape:label') || n.getAttribute('name') || id; openDistrictDetail(id || name, name); });
+          n.addEventListener('pointerenter', ()=> n.setAttribute('data-hover','1'));
+          n.addEventListener('pointerleave', ()=> n.removeAttribute('data-hover'));
+        });
+
+        // enable pan & zoom on svg container
+        const parent = svg.parentElement || svg;
+        enablePanZoom(parent);
+      }catch(e){ console.warn('attachDistrictHandlers error', e); }
+    }
+
+    // basic pan & zoom for map container
+    function enablePanZoom(el){
+      let translateX = 0, translateY = 0, scale = 1;
+      let pointers = new Map();
+      let isDown = false;
+      const setTransform = ()=>{ el.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`; };
+
+      el.addEventListener('pointerdown', (e)=>{
+        el.setPointerCapture && el.setPointerCapture(e.pointerId);
+        pointers.set(e.pointerId, {x:e.clientX,y:e.clientY});
+        if(pointers.size === 1){ isDown = true; el._startX = e.clientX - translateX; el._startY = e.clientY - translateY; el.classList.add('grabbing'); }
+      });
+      el.addEventListener('pointermove', (e)=>{
+        if(pointers.has(e.pointerId)) pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+        if(pointers.size === 1 && isDown){ translateX = e.clientX - el._startX; translateY = e.clientY - el._startY; setTransform(); }
+        else if(pointers.size === 2){ const pts = Array.from(pointers.values()); const d = Math.hypot(pts[0].x-pts[1].x, pts[0].y-pts[1].y); if(!el._lastD){ el._lastD = d; } const delta = d / el._lastD; el._lastD = d; scale = Math.min(3, Math.max(0.6, scale * delta)); setTransform(); }
+      });
+      el.addEventListener('pointerup', (e)=>{ el.releasePointerCapture && el.releasePointerCapture(e.pointerId); pointers.delete(e.pointerId); if(pointers.size===0){ isDown=false; el._lastD = null; el.classList.remove('grabbing'); } });
+      el.addEventListener('pointercancel', ()=>{ pointers.clear(); isDown=false; el.classList.remove('grabbing'); });
+      el.addEventListener('wheel', (e)=>{ e.preventDefault(); const delta = -e.deltaY * 0.001; scale = Math.min(3, Math.max(0.6, scale + delta)); setTransform(); });
+    }
+
+    // ----------------- end SVG helpers -----------------
+
+    // close detail
+    $('close-detail') && $('close-detail').addEventListener('click', ()=>{ const detail = $('detail'); detail.classList.remove('active'); detail.setAttribute('aria-hidden','true'); });
+
+    // initial load: ensure 25 subpages exist, then load the map
+    ensureSubpages(25);
+    loadSVG();
+
+    // safety: hide portfolio at start
+    showCard();
+
+    // attach long-press handlers at document level for svg once loaded
+    document.addEventListener('pointerdown', (e)=>{ const t = e.target.closest && e.target.closest('[id]'); if(t){ const name = t.getAttribute('data-name') || t.id; startLongPress(e,name); } });
+    document.addEventListener('pointerup', clearLongPress);
+    document.addEventListener('pointercancel', clearLongPress);
+
+  </script>
+</body>
+</html>
