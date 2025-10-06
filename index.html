@@ -38,9 +38,14 @@
     .role{color:var(--muted)}
     .desc{color:var(--muted);font-family:'JoseonGulim',serif}
     .contact-chips{display:flex;gap:10px;flex-wrap:wrap}
-    .chip{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.02);color:var(--text);text-decoration:none}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));color:var(--text);text-decoration:none;border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(4px);transition:transform .12s ease,box-shadow .12s ease;cursor:pointer}
+.chip:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.chip:active{transform:translateY(-1px);}
 
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;color:var(--text);background:transparent}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700;color:var(--bg-a);background:linear-gradient(180deg,var(--accent),#ffb57a);box-shadow:0 8px 24px rgba(255,181,122,0.12);transition:transform .12s ease,box-shadow .12s ease}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);box-shadow:none}
+.btn:active{transform:translateY(1px)}
     .btn.primary{background:linear-gradient(180deg,var(--accent),#ffb57a);color:var(--bg-a)}
 
     .portfolio{width:980px;max-width:98vw;border-radius:calc(var(--card-radius));overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));backdrop-filter:blur(6px);min-height:560px;padding:18px;display:flex;flex-direction:column;gap:12px}
@@ -60,6 +65,14 @@
 
     .hidden{display:none}
     .card-foot{padding:10px 16px;color:var(--muted);font-size:13px;text-align:center}
+  
+    /* 몽환적인 움직이는 배경 (CSS만으로 작동, GitHub Pages에서도 동작) */
+    #bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    #bg-anim::before{content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 10% 20%, rgba(255,200,160,0.06), transparent 8%),radial-gradient(circle at 80% 80%, rgba(120,180,255,0.06), transparent 10%),linear-gradient(180deg, rgba(10,30,50,0.6), rgba(4,18,35,0.6));filter:blur(36px);transform:scale(1.05);animation:drift 18s linear infinite}
+    #bg-anim::after{content:'';position:absolute;inset:-30%;background:conic-gradient(from 90deg at 50% 50%, rgba(255,255,255,0.02), rgba(255,200,160,0.01), rgba(120,180,255,0.01));mix-blend-mode:overlay;filter:blur(40px);animation:spin 30s linear infinite}
+    @keyframes drift{0%{transform:translateY(0) scale(1.05)}50%{transform:translateY(-6%) scale(1.08)}100%{transform:translateY(0) scale(1.05)}}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
   </style>
 </head>
 <body>
@@ -84,34 +97,31 @@
       <div class="meta"><h1 id="title">정준우</h1><div class="role" id="role">서울 사진 · 영상 제작자</div></div>
       <p class="desc" id="desc" style="margin-bottom:20px">다양한 서울을 사진과 영상으로 표현합니다.</p>
       <h3 style="margin:0 0 8px 0;color:var(--muted);font-size:14px">Profile</h3>
-      <div id="profile-list" aria-label="프로필 목록" style="min-height:10px;padding:0px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);white-space:pre-wrap;overflow:auto;">
-        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
-          <li><a href="#" class="career-link" data-id="c2022-1" style="color:var(--text);text-decoration:none">2022</a></li>
-          <li><a href="#" class="career-link" data-id="c2022-2" style="color:var(--text);text-decoration:none">서울영상공모전 수상</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-1" style="color:var(--text);text-decoration:none">2023</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-2" style="color:var(--text);text-decoration:none">부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-3" style="color:var(--text);text-decoration:none">TikTok 포토 크리에이터 활동</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-4" style="color:var(--text);text-decoration:none">궁금했어, 기후변화(나무생각)에 사진 수록</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-5" style="color:var(--text);text-decoration:none">한국청소년사진공모전 은상, 동상</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-6" style="color:var(--text);text-decoration:none">강남구 영상 공모전 1·2회 베스트제작상</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-1" style="color:var(--text);text-decoration:none">2024</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-2" style="color:var(--text);text-decoration:none">영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-3" style="color:var(--text);text-decoration:none">서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-4" style="color:var(--text);text-decoration:none">서울특별시 챌린지 서울상(1등상)</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-5" style="color:var(--text);text-decoration:none">한국청소년 사진제 우수상 수상</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-6" style="color:var(--text);text-decoration:none">서울시민기자</a></li>
+      <div id="profile-list" aria-label="프로필 목록" style="min-height:10px;padding:8px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);white-space:pre-wrap;overflow:auto;margin-top:6px;">
+        <ul style="list-style:none;margin:0;padding:6px 0 0 0;display:flex;flex-direction:column;gap:6px">
+          <li><a href="#" class="career-link" data-id="c2022-2" style="color:var(--text);text-decoration:none">2022 — 서울영상공모전 수상</a></li>
+          <li><a href="#" class="career-link" data-id="c2023-2" style="color:var(--text);text-decoration:none">2023 — 부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
+          <li><a href="#" class="career-link" data-id="c2023-3" style="color:var(--text);text-decoration:none">2023 — TikTok 포토 크리에이터 활동</a></li>
+          <li><a href="#" class="career-link" data-id="c2023-4" style="color:var(--text);text-decoration:none">2023 — 궁금했어, 기후변화(나무생각)에 사진 수록</a></li>
+          <li><a href="#" class="career-link" data-id="c2023-5" style="color:var(--text);text-decoration:none">2023 — 한국청소년사진공모전 은상·동상</a></li>
+          <li><a href="#" class="career-link" data-id="c2023-6" style="color:var(--text);text-decoration:none">2023 — 강남구 영상 공모전 1·2회 베스트제작상</a></li>
+          <li><a href="#" class="career-link" data-id="c2024-2" style="color:var(--text);text-decoration:none">2024 — 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
+          <li><a href="#" class="career-link" data-id="c2024-3" style="color:var(--text);text-decoration:none">2024 — 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
+          <li><a href="#" class="career-link" data-id="c2024-4" style="color:var(--text);text-decoration:none">2024 — 서울특별시 챌린지 서울상(1등상)</a></li>
+          <li><a href="#" class="career-link" data-id="c2024-5" style="color:var(--text);text-decoration:none">2024 — 한국청소년 사진제 우수상 수상</a></li>
+          <li><a href="#" class="career-link" data-id="c2024-6" style="color:var(--text);text-decoration:none">2024 — 서울시민기자</a></li>
         </ul>
-        <small style="display:block;margin-top:0px;color:var(--muted)">각 항목을 누르면 세부 페이지로 이동합니다.</small>
+        <small style="display:block;margin-top:6px;color:var(--muted)">각 항목을 누르면 세부 페이지로 이동합니다.</small>
       </div>
-      <h3 style="margin:0 0 8px 0;color:var(--muted);font-size:14px">Contact</h3>
+      <h3 style="margin:6px 0 6px 0;color:var(--muted);font-size:14px">Contact</h3>
       <div class="contact-chips">
         <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
         <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
         <a class="chip" id="instagram" href="https://instagram.com/_junsome" target="_blank" rel="noopener">@_junsome</a>
       </div>
-      <div style="margin-top:12px"><button class="chip" id="download-vcard">vCard 다운로드</button> <button class="chip" id="copy-email">이메일 복사</button></div>
+      <div style="margin-top:12px"><button class="chip" id="download-vcard">명함 다운로드</button> <button class="chip" id="copy-email">이메일 복사</button></div>
     </section>
-    <div class="card-foot">Made with care • 정준우 — Responsive · Mobile-optimized</div>
+    <div class="card-foot">Web Builder 정준우 — Mobile-optimized</div>
   </main>
 
   <!-- portfolio view -->
@@ -122,7 +132,7 @@
         <div id="svg-container" style="width:100%;max-width:1000px"></div>
       </div>
     </div>
-    <div style="color:var(--muted);font-size:13px">지도에서 구를 터치(또는 클릭)하면 해당 구의 작품 목록 패널이 열립니다.</div>
+    <div style="color:var(--muted);font-size:13px">지도를 누르면 해당 장소의 작품 목록이 보입니다.</div>
   </section>
 
   <!-- district detail panel (shows inside app) -->
@@ -132,7 +142,7 @@
   </aside>
 
   <script>
-    // small helper
+    // helper
     const $ = id => document.getElementById(id);
 
     // tabs
@@ -148,7 +158,35 @@
     // projects sample
     const projects = { jongno:[{title:'종로 A', img:'',desc:'샘플'}] };
 
-    // storage helpers
+    // IndexedDB helpers for storing images (avoids localStorage size limits)
+    const dbPromise = (function(){
+      return new Promise((resolve,reject)=>{
+        const req = indexedDB.open('junsome-db',1);
+        req.onupgradeneeded = ()=>{ const db = req.result; if(!db.objectStoreNames.contains('images')) db.createObjectStore('images',{keyPath:'id'}); };
+        req.onsuccess = ()=>resolve(req.result);
+        req.onerror = ()=>reject(req.error);
+      });
+    })();
+
+    async function saveImageBlob(id, file){ try{ const db = await dbPromise; return new Promise((res,rej)=>{ const tx = db.transaction('images','readwrite'); tx.objectStore('images').put({id,blob:file}); tx.oncomplete = ()=> res(id); tx.onerror = ()=> rej(tx.error); }); }catch(e){ console.error('saveImageBlob error',e); throw e; } }
+    async function getImageBlob(id){ try{ const db = await dbPromise; return new Promise((res,rej)=>{ const tx = db.transaction('images','readonly'); const rq = tx.objectStore('images').get(id); rq.onsuccess = ()=> res(rq.result ? rq.result.blob : null); rq.onerror = ()=> rej(rq.error); }); }catch(e){ console.error('getImageBlob error',e); return null; } }
+
+    function createObjectURLFromBlob(blob){ return blob ? URL.createObjectURL(blob) : null; }
+
+    // portrait handling: try repo assets then fallbacks, then local override via IndexedDB
+    const portraitImg = $('portrait-img');
+    const portraitCandidates = ['assets/IMG_9121.JPEG','assets/IMG_9121.JPEG','assets/IMG_9121.jpg','assets/IMG_9121.png','assets/IMG_9121.svg'];
+    function trySetPortraitFromCandidates(cands){ let i=0; function tryNext(){ if(i>=cands.length){ return; } portraitImg.src = cands[i++]; portraitImg.onerror = tryNext; }
+      tryNext(); }
+
+    async function loadPortrait(){ const key = localStorage.getItem('portrait_img'); if(key){ const blob = await getImageBlob(key); if(blob){ portraitImg.src = createObjectURLFromBlob(blob); return; } }
+      trySetPortraitFromCandidates(portraitCandidates);
+    }
+
+    // add portrait upload UI (creates hidden input + button)
+    
+
+    // storage helpers for submissions metadata (still in localStorage)
     function submissionsKey(id){ return 'submissions_' + id; }
     function loadSubmissions(id){ try{ const raw = localStorage.getItem(submissionsKey(id)); return raw ? JSON.parse(raw) : []; }catch(e){ return []; } }
     function saveSubmissions(id, arr){ localStorage.setItem(submissionsKey(id), JSON.stringify(arr)); }
@@ -158,14 +196,19 @@
 
     function getOrAssignSubpageForDistrict(districtId,districtName){ if(!districtId) return districtId||districtName; let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta || !Array.isArray(meta.pages)) meta=ensureSubpages(25); let page = meta.pages.find(p=>p.assignedTo===districtId); if(!page){ page = meta.pages.find(p=>!p.assignedTo); if(page){ page.assignedTo = districtId; if(districtName) page.title = districtName; localStorage.setItem('subpages_meta', JSON.stringify(meta)); } else return districtId; } return page.id; }
 
-    // create submission card (reusable)
-    function createSubmissionCard(item, key){ const c=document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.src=item.img; img.alt=item.title; const h=document.createElement('h4'); h.textContent=item.title; const p=document.createElement('p'); p.textContent=item.desc; c.appendChild(img); c.appendChild(h); c.appendChild(p);
+    // create submission card (supports img dataUrl or imgKey stored in IDB)
+    function createSubmissionCard(item, key){ const c=document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.alt=item.title || ''; img.src = item.img || ''; img.style.background='rgba(0,0,0,0.04)'; // placeholder background
+      const h=document.createElement('h4'); h.textContent=item.title || '';
+      const p=document.createElement('p'); p.textContent=item.desc || '';
+      c.appendChild(img); c.appendChild(h); c.appendChild(p);
+      // if item has imgKey, load blob and set src
+      if(item.imgKey){ getImageBlob(item.imgKey).then(blob=>{ if(blob){ img.src = createObjectURLFromBlob(blob); } }); }
+
       const actions=document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px'; actions.style.marginTop='8px'; const editBtn=document.createElement('button'); editBtn.className='chip'; editBtn.textContent='수정'; const delBtn=document.createElement('button'); delBtn.className='chip'; delBtn.textContent='삭제'; actions.appendChild(editBtn); actions.appendChild(delBtn); c.appendChild(actions);
       editBtn.addEventListener('click', ()=>openEditDialog(item,key,c)); delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')){ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr.splice(idx,1); saveSubmissions(key,arr); c.remove(); } } }); return c; }
 
-    function openEditDialog(item,key,cardElement){
-      const form=document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px'; const title=document.createElement('input'); title.value=item.title; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)'; const desc=document.createElement('textarea'); desc.value=item.desc; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)'; const file=document.createElement('input'); file.type='file'; file.accept='image/*'; const save=document.createElement('button'); save.className='btn primary'; save.textContent='저장'; const cancel=document.createElement('button'); cancel.className='btn'; cancel.textContent='취소'; form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel); cardElement.appendChild(form);
-      let newDataUrl=null; file.addEventListener('change',(e)=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ newDataUrl=r.result; }; r.readAsDataURL(f); }); cancel.addEventListener('click', ()=>form.remove()); save.addEventListener('click', ()=>{ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newDataUrl) arr[idx].img=newDataUrl; saveSubmissions(key,arr); cardElement.querySelector('h4').textContent=arr[idx].title; cardElement.querySelector('p').textContent=arr[idx].desc; cardElement.querySelector('img').src=arr[idx].img; form.remove(); } }); }
+    function openEditDialog(item,key,cardElement){ const form=document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px'; const title=document.createElement('input'); title.value=item.title||''; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)'; const desc=document.createElement('textarea'); desc.value=item.desc||''; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)'; const file=document.createElement('input'); file.type='file'; file.accept='image/*'; const save=document.createElement('button'); save.className='btn primary'; save.textContent='저장'; const cancel=document.createElement('button'); cancel.className='btn'; cancel.textContent='취소'; form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel); cardElement.appendChild(form);
+      let newFileBlob=null; file.addEventListener('change',(e)=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; newFileBlob = f; }); cancel.addEventListener('click', ()=>form.remove()); save.addEventListener('click', async ()=>{ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newFileBlob){ const imgKey = 'img_' + Date.now(); await saveImageBlob(imgKey, newFileBlob); arr[idx].imgKey = imgKey; } saveSubmissions(key,arr); cardElement.querySelector('h4').textContent = arr[idx].title; cardElement.querySelector('p').textContent = arr[idx].desc; if(arr[idx].imgKey){ const b = await getImageBlob(arr[idx].imgKey); if(b) cardElement.querySelector('img').src = createObjectURLFromBlob(b); } form.remove(); } }); }
 
     async function renderDetailContent(pageKey, displayName){
       const content = $('detail-content'); content.innerHTML = '';
@@ -175,8 +218,8 @@
       formWrap.style.background = 'linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008))';
       formWrap.style.padding = '12px'; formWrap.style.borderRadius = '10px';
 
-      const h3 = document.createElement('h3'); h3.style.margin = '0 0 8px 0'; h3.style.color = 'var(--text)'; h3.textContent = '내 작품 등록';
-      const p = document.createElement('p'); p.style.color = 'var(--muted)'; p.style.margin = '0 0 8px 0'; p.textContent = '사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.';
+      const h3 = document.createElement('h3'); h3.style.margin = '0 0 12px 0'; h3.style.color = 'var(--text)'; h3.textContent = '내 작품 등록';
+      const p = document.createElement('p'); p.style.color = 'var(--muted)'; p.style.margin = '0 0 12px 0'; p.textContent = '사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.';
 
       const inputTitle = document.createElement('input'); inputTitle.placeholder = '작품 제목'; inputTitle.style.padding='8px'; inputTitle.style.borderRadius='8px'; inputTitle.style.border='1px solid rgba(255,255,255,0.04)'; inputTitle.style.background='transparent'; inputTitle.style.color='var(--text)';
       const inputDesc = document.createElement('textarea'); inputDesc.placeholder = '간단한 설명'; inputDesc.rows = 3; inputDesc.style.padding='8px'; inputDesc.style.borderRadius='8px'; inputDesc.style.border='1px solid rgba(255,255,255,0.04)'; inputDesc.style.background='transparent'; inputDesc.style.color='var(--text)';
@@ -203,31 +246,43 @@
       const userGrid = document.createElement('div'); userGrid.style.display='grid'; userGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; userGrid.style.gap='12px'; subs.forEach(s=> userGrid.appendChild(createSubmissionCard(s,key)));
       content.appendChild(userWrap); content.appendChild(userGrid);
 
-      // handle file preview
-      let currentFile = null;
-      inputFile.addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.'); const r = new FileReader(); r.onload = ()=>{ previewImg.src = r.result; previewBox.style.display = 'block'; currentFile = r.result; }; r.readAsDataURL(f); });
+      // handle file preview (use blob URLs and store blob on upload to IDB)
+      let currentFileBlob = null;
+      inputFile.addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.'); previewImg.src = createObjectURLFromBlob(f); previewBox.style.display = 'block'; currentFileBlob = f; });
 
-      // upload handler
+      // upload handler (stores blob in IDB and reference in submissions metadata)
       uploadBtn.addEventListener('click', async ()=>{
         const title = inputTitle.value.trim() || '무제';
         const desc = inputDesc.value.trim() || '';
-        if(!currentFile) return alert('업로드할 이미지를 선택하세요.');
+        if(!currentFileBlob) return alert('업로드할 이미지를 선택하세요.');
         const arr = loadSubmissions(key);
-        const item = { id: 's_' + Date.now(), title, desc, img: currentFile, createdAt: Date.now() };
+        const itemId = 's_' + Date.now();
+        // store blob in IDB under key itemId
+        await saveImageBlob(itemId, currentFileBlob);
+        const item = { id: itemId, title, desc, imgKey: itemId, createdAt: Date.now() };
         arr.unshift(item); saveSubmissions(key, arr);
         userGrid.insertBefore(createSubmissionCard(item, key), userGrid.firstChild);
         // reset
-        inputTitle.value=''; inputDesc.value=''; inputFile.value=''; previewBox.style.display='none'; previewImg.src=''; currentFile = null;
+        inputTitle.value=''; inputDesc.value=''; inputFile.value=''; previewBox.style.display='none'; previewImg.src=''; currentFileBlob = null;
       });
+
+      // add click handler for open-detail-page to include blob images (async)
+      $('open-detail-page').onclick = async ()=>{
+        const list = loadSubmissions(key).concat(projects[(pageKey||'').toLowerCase()]||projects[displayName]||[]);
+        // for any item with imgKey, create objectURLs and include them
+        const parts = await Promise.all(list.map(async p=>{
+          let imgTag = '';
+          if(p.img) imgTag = `<img src="${p.img}">`;
+          else if(p.imgKey){ const b = await getImageBlob(p.imgKey); if(b){ const url = createObjectURLFromBlob(b); imgTag = `<img src="${url}">`; }
+          }
+          return `<div class="proj"><h3>${escapeHtml(p.title||'')}</h3><p>${escapeHtml(p.desc||'')}</p>${imgTag}</div>`;
+        }));
+        const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${encodeURIComponent(displayName||key)} — 상세</title><style>body{background:#081025;color:#fff;font-family:Arial;padding:20px}.proj{border-radius:8px;padding:12px;background:#071827;margin-bottom:10px} img{max-width:100%;height:auto;border-radius:6px}</style></head><body><h1>${escapeHtml(displayName||key)} — 작품 목록</h1>${parts.join('') || '<p>등록된 프로젝트가 없습니다.</p>'}</body></html>`;
+        const blob = new Blob([html], {type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank');
+      };
     }
 
-    function openDistrictDetail(id,name){
-      const pageKey = getOrAssignSubpageForDistrict(id,name);
-      $('detail-title').textContent = name || pageKey;
-      renderDetailContent(pageKey, name);
-      const detail = $('detail'); detail.classList.add('active'); detail.setAttribute('aria-hidden','false');
-      $('open-detail-page').onclick = ()=>{ const key = pageKey; const list = loadSubmissions(key).concat(projects[(id||'').toLowerCase()]||projects[name]||[]); const html = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+name+' — 상세</title><style>body{background:#081025;color:#fff;font-family:Arial;padding:20px}.proj{border-radius:8px;padding:12px;background:#071827;margin-bottom:10px} img{max-width:100%;height:auto;border-radius:6px}</style></head><body><h1>'+name+' — 작품 목록</h1>' + (list.length? list.map(p=>'<div class="proj"><h3>'+p.title+'</h3><p>'+p.desc+'</p>'+(p.img?'<img src="'+p.img+'">':'')+'</div>').join('') : '<p>등록된 프로젝트가 없습니다.</p>') + '</body></html>'; const blob = new Blob([html], {type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank'); };
-    }
+    function openDistrictDetail(id,name){ const pageKey = getOrAssignSubpageForDistrict(id,name); $('detail-title').textContent = name || pageKey; renderDetailContent(pageKey, name); const detail = $('detail'); detail.classList.add('active'); detail.setAttribute('aria-hidden','false'); }
 
     // SVG load and handlers (unchanged behavior)
     const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Seoul_districts.svg';
@@ -246,38 +301,66 @@
     // close detail
     $('close-detail') && $('close-detail').addEventListener('click', ()=>{ const detail = $('detail'); detail.classList.remove('active'); detail.setAttribute('aria-hidden','true'); });
 
-    // init
     // Careers data and page generator
     const careers = [
-      {id:'c2022-2', title:'2022 — 서울영상공모전 수상', desc:'서울영상공모전에서 수상하며 영상 제작 역량을 인정받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-2', title:'2023 — 부산광역시 뉴미디어멤버스, 부산광역시장 표창', desc:'부산광역시 뉴미디어멤버스로 활동하며 지방정부 표창을 수상.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-3', title:'2023 — TikTok 포토 크리에이터 활동', desc:'TikTok에서 포토 크리에이터로 활동하며 짧은 형식 콘텐츠를 제작.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-4', title:'2023 — 궁금했어, 기후변화(나무생각)에 사진 수록', desc:'기후변화 관련 사진 작품이 출판물에 수록됨.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-5', title:'2023 — 한국청소년사진공모전 은상·동상', desc:'청소년 사진공모전에서 은상과 동상을 수상.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-6', title:'2023 — 강남구 영상 공모전 1·2회 베스트제작상', desc:'강남구 주최 영상 공모전에서 베스트제작상을 수상.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-2', title:'2024 — 영등포구 SNS미디어기자단, 영등포구청장 표창', desc:'영등포구청의 SNS 미디어 기자단 활동으로 표창을 받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-3', title:'2024 — 서울시 제작지원: 서울세계불꽃축제 협업 촬영', desc:'서울세계불꽃축제 공식 촬영에 참여하여 제작 지원을 받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-4', title:'2024 — 서울특별시 챌린지 서울상(1등상)', desc:'"특별함이 일상이 되는 순간" 챌린지에서 서울상을 수상 (1등).', img:'assets/IMG_9121.svg'},
-      {id:'c2024-5', title:'2024 — 한국청소년 사진제 우수상', desc:'한국사진협회 주최의 한국청소년 사진제에서 우수상을 수상.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-6', title:'2024 — 서울시민기자', desc:'서울시민기자로 활동하며 지역 소식을 기록.', img:'assets/IMG_9121.svg'}
+      {id:'c2022-2', title:'서울영상공모전 수상(2022)', desc:'서울영상공모전에서 수상하며 영상 제작 역량을 인정받음.', img:'assets/IMG_9121.svg'},
+      {id:'c2023-2', title:'부산광역시 뉴미디어멤버스, 부산광역시장 표창(2023)', desc:'부산광역시 서포터즈로 활동하면서, 제2 수도로써 부산의 다양한 면모를 널리 알리고, 이 공로를 인정받아 부산광역시장 표창을 받음.', img:'assets/IMG_9121.svg'},
+      {id:'c2023-3', title:'TikTok 포토 크리에이터 활동(2023)', desc:'TikTok에서 포토 크리에이터로 활동하며 다양한 사진 컨텐츠를 공유함.', img:'assets/IMG_9121.svg'},
+      {id:'c2023-4', title:'궁금했어, 기후변화(나무생각)에 사진 수록', desc:'기상청 기상기후공모전 수상작인 "삐뽀삐뽀,정준우"를 출판사의 요청으로 청소년 도서에 수록함.', img:'assets/IMG_9121.svg'},
+      {id:'c2023-5', title:'한국청소년사진공모전 은상·동상', img:'assets/IMG_9121.svg'},
+      {id:'c2023-6', title:'강남구 영상 공모전 1·2회 베스트제작상', desc:'다양한 강남의 모습을 숏폼으로 담았음.', img:'assets/IMG_9121.svg'},
+      {id:'c2024-2', title:'영등포구 SNS미디어기자단, 영등포구청장 표창', desc:'영등포구청의 SNS 미디어 기자단 활동으로 표창을 받음.', img:'assets/IMG_9121.svg'},
+      {id:'c2024-3', title:'서울시 제작지원: 서울세계불꽃축제 협업 촬영', desc:'서울세계불꽃축제 공식 촬영에 참여하여 제작 지원을 받음.', img:'assets/IMG_9121.svg'},
+      {id:'c2024-4', title:'서울특별시 챌린지 서울상(1등상)', desc:'"특별함이 일상이 되는 순간" 챌린지에서 서울상을 수상 (1등).', img:'assets/IMG_9121.svg'},
+      {id:'c2024-5', title:'한국청소년 사진제 우수상', desc:'한국사진협회 주최의 한국청소년 사진제에서 우수상을 수상.', img:'assets/IMG_9121.svg'},
+      {id:'c2024-6', title:'서울시민기자', desc:'서울시민기자로 활동하며 지역 소식을 기록.', img:'assets/IMG_9121.svg'}
     ];
 
-    function openCareerPage(id){
-      const c = careers.find(x=>x.id===id);
-      if(!c) return alert('해당 경력 정보를 찾을 수 없습니다.');
-      const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${encodeURIComponent(c.title)}</title><style>body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071226,#081025);color:#eaf2fb;padding:24px;display:flex;align-items:center;justify-content:center} .card{max-width:880px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:28px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.6)} h1{margin:0 0 12px 0;font-size:28px} p{color:#c9dbe8;line-height:1.6} .media{display:flex;gap:16px;align-items:flex-start;margin-top:16px} .media img{width:320px;max-width:40%;height:auto;border-radius:12px;object-fit:cover} @media(max-width:600px){.media{flex-direction:column}.media img{max-width:100%;width:100%}}</style></head><body><div class="card"><h1>${escapeHtml(c.title)}</h1><p>${escapeHtml(c.desc)}</p><div class="media"><img src="${c.img}" alt="${escapeHtml(c.title)}"><div style="flex:1"></div></div></div></body></html>`;
-      const blob = new Blob([html], {type:'text/html'});
-      const url = URL.createObjectURL(blob);
-      window.open(url,'_blank');
-    }
+    function openCareerPage(id){ const c = careers.find(x=>x.id===id); if(!c) return alert('해당 경력 정보를 찾을 수 없습니다.'); const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${encodeURIComponent(c.title)}</title><style>body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071226,#081025);color:#eaf2fb;padding:24px;display:flex;align-items:center;justify-content:center} .card{max-width:880px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:28px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.6)} h1{margin:0 0 12px 0;font-size:28px} p{color:#c9dbe8;line-height:1.6} .media{display:flex;gap:16px;align-items:flex-start;margin-top:16px} .media img{width:320px;max-width:40%;height:auto;border-radius:12px;object-fit:cover} @media(max-width:600px){.media{flex-direction:column}.media img{max-width:100%;width:100%}}</style></head><body><div class="card"><h1>${escapeHtml(c.title)}</h1><p>${escapeHtml(c.desc)}</p><div class="media"><img src="${c.img}" alt="${escapeHtml(c.title)}"><div style="flex:1"></div></div></div></body></html>`; const blob = new Blob([html], {type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank'); }
 
-    function escapeHtml(s){ return (s+'').replace(/[&<>\"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[ch]; }); }
+    function escapeHtml(s){ return (s+'').replace(/[&<>\"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":"&#39;"}[ch]; }); }
     // attach click handlers for profile links (delegation)
     document.addEventListener('click', function(e){ const a = e.target.closest && e.target.closest('.career-link'); if(a){ e.preventDefault(); const id = a.getAttribute('data-id'); openCareerPage(id); } }, false);
 
+    // 한영 토글 (간단한 i18n)
+    const btnKo = document.getElementById('btn-ko');
+    const btnEn = document.getElementById('btn-en');
+    const i18n = {
+      ko: {
+        card: '명함', portfolio: '작품 활동', contact: 'Contact', upload: '업로드', vcard: 'vCard 다운로드', copy: '이메일 복사'
+      },
+      en: {
+        card: 'Card', portfolio: 'Portfolio', contact: 'Contact', upload: 'Upload', vcard: 'Download vCard', copy: 'Copy email'
+      }
+    };
+    function applyLang(lang){
+      if(!i18n[lang]) return;
+      // menu buttons
+      document.getElementById('tab-card').textContent = i18n[lang].card || 'Card';
+      document.getElementById('tab-portfolio').textContent = i18n[lang].portfolio || 'Portfolio';
+      // contact heading
+      const contactHeading = document.querySelector('.hero-right h3') || null;
+      if(contactHeading) contactHeading.textContent = i18n[lang].contact;
+      // other buttons
+      const vbtn = document.getElementById('download-vcard'); if(vbtn) vbtn.textContent = i18n[lang].vcard;
+      const cbtn = document.getElementById('copy-email'); if(cbtn) cbtn.textContent = i18n[lang].copy;
+      // active state
+      if(lang === 'ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); } else { btnEn.classList.add('active'); btnKo.classList.remove('active'); }
+    }
+    btnKo && btnKo.addEventListener('click', ()=>applyLang('ko'));
+    btnEn && btnEn.addEventListener('click', ()=>applyLang('en'));
+    // set initial language
+    (function(){ const saved = localStorage.getItem('site_lang') || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'ko'); applyLang(saved); })();
+
+
+
+    // init
     ensureSubpages(25);
     loadSVG();
     showCard();
+
+    // load portrait from IDB or repo
+    loadPortrait();
   </script>
 </body>
 </html>
