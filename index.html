@@ -15,39 +15,63 @@
   </style>
 
   <style>
-    /* Theme: Apple Blue primary with subtle violet accent */
+    /* ---------- Theme tokens (Light default) ---------- */
     :root{
-      --bg:#f8f9fb;
-      --card:#ffffffcc;
-      --accent:#007aff;
-      --accent-2:#5f6fff;
-      --text:#1c1c1e;
-      --muted:#6e6e73;
-      --soft-shadow: 0 8px 30px rgba(16,24,40,0.08);
-      --pill-radius:18px;
-      --card-radius:30px;
+      --bg: #f8f9fb; /* page background */
+      --bg-accent: linear-gradient(180deg,#f8fbff,#eef6ff);
+      --card-bg: rgba(255,255,255,0.7);
+      --card-border: rgba(16,24,40,0.04);
+      --text: #1c1c1e;
+      --muted: #6e6e73;
+      --accent: #007aff;
+      --accent-2: #5f6fff;
+      --shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --glass-blur: 10px;
+      --card-radius: 30px;
+      --pill-radius: 18px;
       --max-width:980px;
+    }
+
+    /* ---------- Dark theme overrides (applied with body.dark) ---------- */
+    body.dark{
+      --bg: linear-gradient(180deg,#06070a,#071026);
+      --bg-accent: linear-gradient(180deg,#061021,#071026);
+      --card-bg: rgba(10,16,28,0.55);
+      --card-border: rgba(255,255,255,0.06);
+      --text: #eaf2fb;
+      --muted: #b6c6e0;
+      --accent: #0a84ff; /* slightly brighter on dark */
+      --accent-2: #6b6fff;
+      --shadow: 0 14px 40px rgba(2,6,23,0.6);
+      --glass-blur: 12px;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%;margin:0}
-    body{font-family:Inter, 'Noto Sans KR', system-ui,-apple-system; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; display:flex;align-items:flex-start;justify-content:center;padding:28px}
+    body{font-family:Inter, 'Noto Sans KR', system-ui,-apple-system; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; display:flex;align-items:flex-start;justify-content:center;padding:28px;transition:background .28s ease,color .28s ease}
 
-    /* subtle floating background */
+    /* subtle floating background shapes */
     #bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none}
-    #bg-anim::before{content:'';position:absolute;inset:-10%;background:radial-gradient(circle at 10% 10%, rgba(95,111,255,0.06), transparent 8%), radial-gradient(circle at 85% 85%, rgba(0,122,255,0.04), transparent 12%);filter:blur(40px);transform:scale(1.03);animation:drift 28s linear infinite}
+    #bg-anim::before{content:'';position:absolute;inset:-10%;background:radial-gradient(circle at 12% 12%, rgba(95,111,255,0.06), transparent 8%), radial-gradient(circle at 88% 88%, rgba(0,122,255,0.04), transparent 12%);filter:blur(40px);transform:scale(1.03);animation:drift 28s linear infinite;mix-blend-mode:soft-light}
     @keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-6%)}100%{transform:translateY(0)}}
 
     .stage{position:relative;z-index:10;width:100%;max-width:var(--max-width)}
     .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
     .logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--accent);text-decoration:none}
 
-    /* CARD */
-    .card{display:grid;grid-template-columns:320px 1fr;gap:22px;background:var(--card);border-radius:var(--card-radius);padding:26px;box-shadow:var(--soft-shadow);backdrop-filter:blur(8px);overflow:hidden}
+    /* theme toggles */
+    .theme-toggle{display:flex;gap:8px;align-items:center}
+    .theme-btn{appearance:none;border:0;padding:8px 12px;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;font-weight:700;border:1px solid transparent;transition:all .18s ease}
+    .theme-btn.active{background:linear-gradient(90deg, rgba(0,122,255,0.12), rgba(95,111,255,0.06));color:var(--accent);box-shadow:0 6px 20px rgba(0,122,255,0.08);border-color:rgba(0,122,255,0.08)}
+
+    /* CARD: glass-like */
+    .card{display:grid;grid-template-columns:320px 1fr;gap:22px;background:var(--card-bg);border-radius:var(--card-radius);padding:26px;box-shadow:var(--shadow);backdrop-filter:blur(var(--glass-blur));-webkit-backdrop-filter:blur(var(--glass-blur));border:1px solid var(--card-border);overflow:hidden;position:relative;transition:background .25s ease,box-shadow .25s ease}
+    .card::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));mix-blend-mode:overlay}
 
     /* left hero */
     .hero{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px}
-    .portrait-wrap{width:300px;max-width:78%;aspect-ratio:1/1;border-radius:36px;overflow:hidden;box-shadow:0 18px 50px rgba(16,24,40,0.08);border:1px solid rgba(0,0,0,0.04);background:linear-gradient(135deg,#ffffff,#f1f6ff)}
+    .portrait-wrap{width:300px;max-width:78%;aspect-ratio:1/1;border-radius:36px;overflow:hidden;box-shadow:0 18px 50px rgba(16,24,40,0.06);border:1px solid rgba(255,255,255,0.06);background:linear-gradient(135deg,#ffffff,#f1f6ff)}
+    body.dark .portrait-wrap{border:1px solid rgba(255,255,255,0.06);box-shadow:0 18px 60px rgba(2,6,23,0.6);background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))}
     .portrait-wrap img{width:100%;height:100%;object-fit:cover;display:block}
     .kicker{font-size:13px;color:var(--muted);text-align:center}
 
@@ -57,11 +81,13 @@
     .meta .role{color:var(--muted);font-size:13px}
     .desc{color:var(--muted);font-family:'JoseonGulim',serif;line-height:1.6}
 
-    .profile-box{margin-top:12px;padding:14px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.90));border:1px solid rgba(10,20,40,0.03);box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+    .profile-box{margin-top:12px;padding:14px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.48));border:1px solid rgba(16,24,40,0.03);box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+    body.dark .profile-box{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.45)}
 
     .contact{display:flex;flex-direction:column;gap:12px;margin-top:14px}
     .chips{display:flex;gap:10px;flex-wrap:wrap}
-    .chip{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:white;border:1px solid rgba(16,24,40,0.04);color:var(--text);text-decoration:none;box-shadow:0 6px 18px rgba(16,24,40,0.04);font-weight:600}
+    .chip{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.8));border:1px solid rgba(16,24,40,0.04);color:var(--text);text-decoration:none;box-shadow:0 6px 18px rgba(16,24,40,0.04);font-weight:600}
+    body.dark .chip{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.35);color:var(--text)}
 
     .actions{display:flex;gap:12px;margin-top:10px}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:0;cursor:pointer;font-weight:700;color:white;background:linear-gradient(180deg,var(--accent),var(--accent-2));box-shadow:0 12px 30px rgba(0,122,255,0.14);transition:transform .12s ease}
@@ -72,6 +98,7 @@
     /* portfolio map */
     .portfolio{margin-top:18px;padding:18px;border-radius:18px;background:transparent}
     .map-wrap{width:100%;height:420px;border-radius:14px;overflow:hidden;border:1px solid rgba(16,24,40,0.04)}
+    body.dark .map-wrap{border:1px solid rgba(255,255,255,0.04)}
 
     /* cards animation on scroll */
     .fade-in{opacity:0;transform:translateY(10px);transition:opacity .48s ease, transform .48s cubic-bezier(.2,.9,.3,1)}
@@ -85,15 +112,22 @@
     /* svg district hover style (for inline SVG) */
     svg .district{fill:transparent;stroke:rgba(16,24,40,0.06);stroke-width:1}
     svg .district[data-hover] {fill: rgba(0,122,255,0.06);}
+    body.dark svg .district{stroke:rgba(255,255,255,0.06)}
+    body.dark svg .district[data-hover]{fill: rgba(10,132,255,0.06)}
   </style>
 </head>
 <body>
   <div id="bg-anim" aria-hidden></div>
   <div class="stage">
     <header class="header">
-      <a class="logo" href="#" aria-label="홈"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden><rect x="2" y="2" width="20" height="20" rx="5" fill="#007aff" opacity="0.08"></rect><path d="M6 8h12M6 14h12" stroke="#007aff" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"></path></svg><span style="color:var(--accent)">정준우</span></a>
+      <a class="logo" href="#" aria-label="홈"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden><rect x="2" y="2" width="20" height="20" rx="5" fill="var(--accent)" opacity="0.08"></rect><path d="M6 8h12M6 14h12" stroke="var(--accent)" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"></path></svg><span style="color:var(--accent)">정준우</span></a>
 
       <div style="display:flex;gap:8px;align-items:center">
+        <div class="theme-toggle" role="toolbar" aria-label="테마 선택">
+          <button id="theme-light" class="theme-btn" title="Light theme">Light</button>
+          <button id="theme-dark" class="theme-btn" title="Dark theme">Dark</button>
+        </div>
+        <div style="width:10px"></div>
         <div class="lang"><button id="btn-ko" class="active" aria-pressed="true">한국어</button><button id="btn-en" aria-pressed="false">English</button></div>
       </div>
     </header>
@@ -173,17 +207,27 @@
   <script>
     const $ = id => document.getElementById(id);
 
+    // theme handling
+    const themeLightBtn = $('theme-light');
+    const themeDarkBtn = $('theme-dark');
+    function setTheme(t){
+      if(t==='dark'){ document.body.classList.add('dark'); themeDarkBtn.classList.add('active'); themeLightBtn.classList.remove('active'); }
+      else { document.body.classList.remove('dark'); themeLightBtn.classList.add('active'); themeDarkBtn.classList.remove('active'); }
+      try{ localStorage.setItem('site_theme', t); }catch(e){}
+    }
+    themeLightBtn && themeLightBtn.addEventListener('click', ()=>setTheme('light'));
+    themeDarkBtn && themeDarkBtn.addEventListener('click', ()=>setTheme('dark'));
+    (function(){ const saved = localStorage.getItem('site_theme'); if(saved) setTheme(saved); else { const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; setTheme(prefersDark? 'dark' : 'light'); } })();
+
     // language toggle
     const btnKo = $('btn-ko'), btnEn = $('btn-en');
     const i18n = { ko:{card:'명함',portfolio:'작품 활동',contact:'Contact',vcard:'vCard 다운로드',copy:'이메일 복사'}, en:{card:'Card',portfolio:'Portfolio',contact:'Contact',vcard:'Download vCard',copy:'Copy email'} };
     function applyLang(lang){
       if(!i18n[lang]) return;
       const tb = $('tab-card'); const tp = $('tab-portfolio');
-      if(tb) tb.textContent = i18n[lang].card;
-      if(tp) tp.textContent = i18n[lang].portfolio;
+      if(tb) tb.textContent = i18n[lang].card; if(tp) tp.textContent = i18n[lang].portfolio;
       const ch = document.querySelector('.profile-box h3'); if(ch) ch.textContent = i18n[lang].contact;
-      const vb = $('download-vcard'); if(vb) vb.textContent = i18n[lang].vcard;
-      const cb = $('copy-email'); if(cb) cb.textContent = i18n[lang].copy;
+      const vb = $('download-vcard'); if(vb) vb.textContent = i18n[lang].vcard; const cb = $('copy-email'); if(cb) cb.textContent = i18n[lang].copy;
       if(lang==='ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); btnKo.setAttribute('aria-pressed','true'); btnEn.setAttribute('aria-pressed','false'); }
       else { btnEn.classList.add('active'); btnKo.classList.remove('active'); btnEn.setAttribute('aria-pressed','true'); btnKo.setAttribute('aria-pressed','false'); }
       localStorage.setItem('site_lang',lang);
@@ -313,7 +357,12 @@
 
     // vCard (simple)
     const vbtn = $('download-vcard'); if(vbtn){ vbtn.addEventListener('click', ()=>{
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:정준우\nEMAIL;TYPE=INTERNET:luxetjun@naver.com\nTEL;TYPE=CELL:010-2609-0250\nEND:VCARD`;
+      const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:정준우
+EMAIL;TYPE=INTERNET:luxetjun@naver.com
+TEL;TYPE=CELL:010-2609-0250
+END:VCARD`;
       const blob = new Blob([vcard],{type:'text/vcard'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = 'jung_junwoo.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
