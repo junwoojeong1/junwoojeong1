@@ -129,4 +129,195 @@
               <li><a href="#" class="career-link" data-id="c2023-6" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2023 — 강남구 영상 공모전 1·2회 베스트제작상</a></li>
               <li><a href="#" class="career-link" data-id="c2024-2" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2024 — 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
               <li><a href="#" class="career-link" data-id="c2024-3" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2024 — 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-4" style="font-fami
+              <li><a href="#" class="career-link" data-id="c2024-4" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2024 — 서울특별시 챌린지 서울상(1등상)</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-5" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2024 — 한국청소년 사진제 우수상 수상</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-6" style="font-family:'JoseonGulim',serif;color:var(--muted);text-decoration:none;font-size:15px">2024 — 서울시민기자</a></li>
+            </ul>
+            <small style="display:block;margin-top:0px;color:var(--muted)">각 항목을 누르면 세부 페이지로 이동합니다.</small>
+          </div>
+
+          <div class="contact" style="margin-top:12px">
+            <h3 style="margin:0;color:var(--muted);font-size:14px">Contact</h3>
+            <div class="chips">
+              <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
+              <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
+              <a class="chip" id="instagram" href="https://instagram.com/_junsome" target="_blank" rel="noopener">@_junsome</a>
+            </div>
+            <div class="actions">
+              <button class="btn" id="download-vcard">vCard 다운로드</button>
+              <button class="btn ghost" id="copy-email">이메일 복사</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="card-foot">Made with care • 정준우 — Responsive · Mobile-optimized</div>
+    </main>
+
+    <section id="portfolio-view" class="portfolio" aria-hidden="false">
+      <h2 style="margin:6px 0;color:var(--text)">작품 활동 — 서울 지도로 보기</h2>
+      <div class="map-wrap">
+        <div id="map-inner" class="map-inner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <div id="svg-container" style="width:100%;height:100%"></div>
+        </div>
+      </div>
+      <div style="color:var(--muted);font-size:13px;margin-top:8px">지도에서 구를 터치(또는 클릭)하면 해당 구의 작품 목록 패널이 열립니다.</div>
+    </section>
+
+    <aside id="detail" class="detail-panel" role="dialog" aria-hidden="true">
+      <div class="head" style="display:flex;justify-content:space-between;align-items:center"><strong id="detail-title" style="font-size:20px;color:var(--text)"></strong><div style="display:flex;gap:8px"><button id="open-detail-page" class="chip">상세 페이지 열기</button><button id="close-detail" class="chip">닫기</button></div></div>
+      <div class="content" id="detail-content">로딩 중...</div>
+    </aside>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    // language toggle
+    const btnKo = $('btn-ko'), btnEn = $('btn-en');
+    const i18n = { ko:{card:'명함',portfolio:'작품 활동',contact:'Contact',vcard:'vCard 다운로드',copy:'이메일 복사'}, en:{card:'Card',portfolio:'Portfolio',contact:'Contact',vcard:'Download vCard',copy:'Copy email'} };
+    function applyLang(lang){
+      if(!i18n[lang]) return;
+      const tb = $('tab-card'); const tp = $('tab-portfolio');
+      if(tb) tb.textContent = i18n[lang].card;
+      if(tp) tp.textContent = i18n[lang].portfolio;
+      const ch = document.querySelector('.profile-box h3'); if(ch) ch.textContent = i18n[lang].contact;
+      const vb = $('download-vcard'); if(vb) vb.textContent = i18n[lang].vcard;
+      const cb = $('copy-email'); if(cb) cb.textContent = i18n[lang].copy;
+      if(lang==='ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); btnKo.setAttribute('aria-pressed','true'); btnEn.setAttribute('aria-pressed','false'); }
+      else { btnEn.classList.add('active'); btnKo.classList.remove('active'); btnEn.setAttribute('aria-pressed','true'); btnKo.setAttribute('aria-pressed','false'); }
+      localStorage.setItem('site_lang',lang);
+    }
+    btnKo && btnKo.addEventListener('click', ()=>applyLang('ko'));
+    btnEn && btnEn.addEventListener('click', ()=>applyLang('en'));
+    (function(){ const saved = localStorage.getItem('site_lang') || (navigator.language && navigator.language.startsWith('en') ? 'en':'ko'); applyLang(saved); })();
+
+    // careers
+    const careers = [
+      {id:'c2022-2', title:'서울영상공모전 수상 (2022)', desc:'서울영상공모전에서 수상하며 영상 제작 역량을 인정받음.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-2', title:'부산광역시 뉴미디어멤버스 등(2023)', desc:'부산광역시 뉴미디어멤버스 활동 및 표창 수상.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-3', title:'TikTok 포토 크리에이터 활동 (2023)', desc:'TikTok에서 포토 크리에이터 활동.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-4', title:'기후변화 프로젝트 수록 (2023)', desc:'출판물에 사진 수록.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-5', title:'한국청소년사진공모전 수상 (2023)', desc:'은상·동상 수상.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2024-2', title:'영등포구 SNS미디어기자단 표창 (2024)', desc:'영등포구청장 표창 수상.', img:'assets/IMG_9121.JPEG'}
+    ];
+
+    function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[ch])); }
+
+    function openCareerPage(id){
+      const c = careers.find(x=>x.id===id);
+      if(!c) return alert('찾을 수 없습니다');
+      const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(c.title)}</title><style>body{margin:0;font-family:Inter,Arial;background:linear-gradient(180deg,#f6f8fb,#f0f4fb);color:#0f1720;padding:24px;display:flex;align-items:center;justify-content:center} .card{max-width:880px;width:100%;background:#fff;padding:28px;border-radius:18px;box-shadow:0 20px 60px rgba(16,24,40,0.06)} h1{margin:0 0 12px 0;font-size:28px;color:#0f1720} p{color:#475569;line-height:1.6} .media{display:flex;gap:16px;align-items:flex-start;margin-top:16px} .media img{width:320px;max-width:40%;height:auto;border-radius:12px;object-fit:cover} @media(max-width:600px){.media{flex-direction:column}.media img{max-width:100%;width:100%}}</style></head><body><div class="card"><h1>${escapeHtml(c.title)}</h1><p>${escapeHtml(c.desc)}</p><div class="media"><img src="${c.img}" alt="${escapeHtml(c.title)}"><div style="flex:1"></div></div></div></body></html>`;
+      const blob=new Blob([html],{type:'text/html'});
+      window.open(URL.createObjectURL(blob),'_blank');
+    }
+
+    document.addEventListener('click', function(e){
+      const a = e.target.closest && e.target.closest('.career-link');
+      if(a){ e.preventDefault(); openCareerPage(a.getAttribute('data-id')); }
+    }, false);
+
+    // SVG map
+    const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Seoul_districts.svg';
+    async function loadSVG(){
+      const container = $('svg-container');
+      if(!container) return;
+      try{
+        const res = await fetch(SVG_URL);
+        if(!res.ok) throw new Error('SVG fetch failed');
+        const text = await res.text();
+        container.innerHTML = text;
+        const svg = container.querySelector('svg');
+        if(svg) attachDistrictHandlers(svg);
+      }catch(e){
+        console.warn('svg failed',e);
+        container.innerHTML = '<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg"><g id="districts"><path id="jongno" class="district" data-name="종로구" d="M220,120 L380,110 L420,200 L310,240 L230,200 Z" /></g></svg>';
+        const svg = container.querySelector('svg');
+        if(svg) attachDistrictHandlers(svg);
+      }
+    }
+
+    function attachDistrictHandlers(svg){
+      try{
+        // make svg responsive inside container
+        svg.setAttribute('width','100%'); svg.setAttribute('height','100%'); svg.style.width='100%'; svg.style.height='100%'; svg.style.display='block';
+        const nodes = svg.querySelectorAll('[id]');
+        nodes.forEach(n=>{
+          if(!n.classList.contains('district')) n.classList.add('district');
+          n.style.touchAction='manipulation';
+          n.style.cursor = 'pointer';
+          n.setAttribute('role','button');
+          const name = n.getAttribute('data-name') || n.id || '구';
+          n.setAttribute('tabindex','0');
+          n.setAttribute('aria-label', name);
+          const handler = (e)=>{ if(e && e.preventDefault) e.preventDefault(); const id = n.id || ''; const nm = n.getAttribute('data-name') || n.getAttribute('inkscape:label') || n.getAttribute('name') || id; openDistrictDetail(id || nm, nm); };
+          n.addEventListener('click', handler);
+          n.addEventListener('touchstart', (ev)=>{ if(ev && ev.preventDefault) ev.preventDefault(); handler(ev); }, {passive:false});
+          n.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { if(ev && ev.preventDefault) ev.preventDefault(); handler(ev); } });
+          n.addEventListener('pointerenter', ()=> n.setAttribute('data-hover','1'));
+          n.addEventListener('pointerleave', ()=> n.removeAttribute('data-hover'));
+        });
+      }catch(err){ console.warn('attachDistrictHandlers error', err); }
+    }
+
+    // IndexedDB helpers
+    const dbPromise = (function(){
+      return new Promise((resolve,reject)=>{
+        const req = indexedDB.open('junsome-db',1);
+        req.onupgradeneeded = ()=>{ const db = req.result; if(!db.objectStoreNames.contains('images')) db.createObjectStore('images',{keyPath:'id'}); };
+        req.onsuccess = ()=>resolve(req.result);
+        req.onerror = ()=>reject(req.error);
+      });
+    })();
+    async function saveImageBlob(id,file){ const db = await dbPromise; return new Promise((res,rej)=>{ const tx=db.transaction('images','readwrite'); tx.objectStore('images').put({id,blob:file}); tx.oncomplete = ()=>res(id); tx.onerror=()=>rej(tx.error); }); }
+    async function getImageBlob(id){ const db = await dbPromise; return new Promise((res,rej)=>{ const tx=db.transaction('images','readonly'); const rq=tx.objectStore('images').get(id); rq.onsuccess=()=>res(rq.result?rq.result.blob:null); rq.onerror=()=>rej(rq.error); }); }
+
+    function submissionsKey(id){ return 'submissions_' + id; }
+    function loadSubmissions(id){ try{ const raw = localStorage.getItem(submissionsKey(id)); return raw ? JSON.parse(raw) : []; }catch(e){ return []; } }
+    function saveSubmissions(id,arr){ localStorage.setItem(submissionsKey(id), JSON.stringify(arr)); }
+    function ensureSubpages(count){ let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta||!Array.isArray(meta.pages)||meta.pages.length<count){ meta={pages:[]}; for(let i=1;i<=count;i++){ const id='subpage_'+i; meta.pages.push({id,title:'하위 페이지 '+i,assignedTo:null}); if(localStorage.getItem(submissionsKey(id))===null) localStorage.setItem(submissionsKey(id),JSON.stringify([])); } localStorage.setItem('subpages_meta',JSON.stringify(meta)); } return meta; }
+    function getOrAssignSubpageForDistrict(districtId,districtName){ if(!districtId) return districtId||districtName; let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta||!Array.isArray(meta.pages)) meta=ensureSubpages(25); let page = meta.pages.find(p=>p.assignedTo===districtId); if(!page){ page = meta.pages.find(p=>!p.assignedTo); if(page){ page.assignedTo=districtId; if(districtName) page.title=districtName; localStorage.setItem('subpages_meta',JSON.stringify(meta)); } else return districtId; } return page.id; }
+
+    function createSubmissionCard(item,key){ const c=document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.alt=item.title||''; img.style.width='100%'; img.style.height='140px'; img.style.objectFit='cover'; img.style.borderRadius='8px'; img.style.background='rgba(0,0,0,0.04)'; if(item.img) img.src = item.img; else if(item.imgKey){ getImageBlob(item.imgKey).then(b=>{ if(b) img.src = URL.createObjectURL(b); }); }
+      const h=document.createElement('h4'); h.textContent=item.title||''; const p=document.createElement('p'); p.textContent=item.desc||''; c.appendChild(img); c.appendChild(h); c.appendChild(p);
+      const actions=document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px'; actions.style.marginTop='8px'; const editBtn=document.createElement('button'); editBtn.className='chip'; editBtn.textContent='수정'; const delBtn=document.createElement('button'); delBtn.className='chip'; delBtn.textContent='삭제'; actions.appendChild(editBtn); actions.appendChild(delBtn); c.appendChild(actions);
+      editBtn.addEventListener('click', ()=>openEditDialog(item,key,c)); delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')){ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr.splice(idx,1); saveSubmissions(key,arr); c.remove(); } } }); return c; }
+
+    function openEditDialog(item,key,cardElement){ const form=document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px'; const title=document.createElement('input'); title.value=item.title||''; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)'; const desc=document.createElement('textarea'); desc.value=item.desc||''; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)'; const file=document.createElement('input'); file.type='file'; file.accept='image/*'; const save=document.createElement('button'); save.className='btn'; save.textContent='저장'; const cancel=document.createElement('button'); cancel.className='chip'; cancel.textContent='취소'; form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel); cardElement.appendChild(form);
+      let newFile=null; file.addEventListener('change',(e)=>{ newFile = e.target.files && e.target.files[0]; }); cancel.addEventListener('click', ()=>form.remove()); save.addEventListener('click', async ()=>{ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newFile){ const k = 'img_' + Date.now(); await saveImageBlob(k,newFile); arr[idx].imgKey = k; } saveSubmissions(key,arr); cardElement.querySelector('h4').textContent = arr[idx].title; cardElement.querySelector('p').textContent = arr[idx].desc; if(arr[idx].imgKey){ const b = await getImageBlob(arr[idx].imgKey); if(b) cardElement.querySelector('img').src = URL.createObjectURL(b); } form.remove(); } }); }
+
+    async function renderDetailContent(pageKey, displayName){ const content = $('detail-content'); content.innerHTML='';
+      const formWrap=document.createElement('div'); formWrap.style.marginBottom='12px'; formWrap.style.background='linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008))'; formWrap.style.padding='12px'; formWrap.style.borderRadius='10px';
+      const h3=document.createElement('h3'); h3.style.margin='0 0 12px 0'; h3.style.color='var(--text)'; h3.textContent='내 작품 등록'; const p=document.createElement('p'); p.style.color='var(--muted)'; p.style.margin='0 0 12px 0'; p.textContent='사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.';
+      const inputTitle=document.createElement('input'); inputTitle.placeholder='작품 제목'; inputTitle.style.padding='8px'; inputTitle.style.borderRadius='8px'; inputTitle.style.border='1px solid rgba(255,255,255,0.04)'; inputTitle.style.background='transparent'; inputTitle.style.color='var(--text)'; const inputDesc=document.createElement('textarea'); inputDesc.placeholder='간단한 설명'; inputDesc.rows=3; inputDesc.style.padding='8px'; inputDesc.style.borderRadius='8px'; inputDesc.style.border='1px solid rgba(255,255,255,0.04)'; inputDesc.style.background='transparent'; inputDesc.style.color='var(--text)'; const inputFile=document.createElement('input'); inputFile.type='file'; inputFile.accept='image/*'; const controls=document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.alignItems='center'; const uploadBtn=document.createElement('button'); uploadBtn.className='btn'; uploadBtn.textContent='업로드'; const previewBox=document.createElement('div'); previewBox.style.width='84px'; previewBox.style.height='64px'; previewBox.style.borderRadius='8px'; previewBox.style.background='rgba(255,255,255,0.02)'; previewBox.style.display='none'; previewBox.style.overflow='hidden'; const previewImg=document.createElement('img'); previewImg.style.width='100%'; previewImg.style.height='100%'; previewImg.style.objectFit='cover'; previewBox.appendChild(previewImg); controls.appendChild(uploadBtn); controls.appendChild(previewBox);
+      formWrap.appendChild(h3); formWrap.appendChild(p); formWrap.appendChild(inputTitle); formWrap.appendChild(inputDesc); formWrap.appendChild(inputFile); formWrap.appendChild(controls); content.appendChild(formWrap);
+      const key = pageKey || displayName || 'global'; const subs = loadSubmissions(key);
+      const userGrid=document.createElement('div'); userGrid.style.display='grid'; userGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; userGrid.style.gap='12px'; subs.forEach(s=>userGrid.appendChild(createSubmissionCard(s,key))); content.appendChild(userGrid);
+      let currentBlob=null; inputFile.addEventListener('change',(e)=>{ const f=e.target.files && e.target.files[0]; if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.'); previewImg.src = URL.createObjectURL(f); previewBox.style.display='block'; currentBlob = f; });
+      uploadBtn.addEventListener('click', async ()=>{ const title = inputTitle.value.trim() || '무제'; const desc = inputDesc.value.trim() || ''; if(!currentBlob) return alert('업로드할 이미지를 선택하세요.'); const arr = loadSubmissions(key); const itemId = 's_' + Date.now(); await saveImageBlob(itemId,currentBlob); const item = { id:itemId, title, desc, imgKey:itemId, createdAt:Date.now() }; arr.unshift(item); saveSubmissions(key,arr); userGrid.insertBefore(createSubmissionCard(item,key), userGrid.firstChild); inputTitle.value=''; inputDesc.value=''; inputFile.value=''; previewBox.style.display='none'; previewImg.src=''; currentBlob=null; });
+    }
+
+    function openDistrictDetail(id,name){ const pageKey = getOrAssignSubpageForDistrict(id,name); $('detail-title').textContent = name || pageKey; renderDetailContent(pageKey,name); const d=$('detail'); d.classList.add('active'); d.setAttribute('aria-hidden','false'); }
+
+    ensureSubpages(25); loadSVG();
+
+    // close detail
+    const closeDetail = $('close-detail'); if(closeDetail) closeDetail.addEventListener('click', ()=>{ const d=$('detail'); d.classList.remove('active'); d.setAttribute('aria-hidden','true'); });
+
+    // reveal animation
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:0.12});
+    document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+
+    // copy email
+    const copyBtn = $('copy-email'); if(copyBtn){ copyBtn.addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText('luxetjun@naver.com'); copyBtn.textContent='복사됨'; setTimeout(()=>copyBtn.textContent = (localStorage.getItem('site_lang')==='en'?'Copy email':'이메일 복사'),1500); }catch(e){ alert('복사 실패'); } }); }
+
+    // vCard (simple)
+    const vbtn = $('download-vcard'); if(vbtn){ vbtn.addEventListener('click', ()=>{
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:정준우\nEMAIL;TYPE=INTERNET:luxetjun@naver.com\nTEL;TYPE=CELL:010-2609-0250\nEND:VCARD`;
+      const blob = new Blob([vcard],{type:'text/vcard'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'jung_junwoo.vcf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }); }
+  </script>
+</body>
+</html>
