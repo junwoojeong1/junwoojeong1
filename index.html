@@ -3,383 +3,244 @@
 <head>
   <meta charset="utf-8" />
   <base href="./">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="정준우 — 온라인 명함">
   <meta property="og:site_name" content="정준우 Portfolio">
   <meta name="theme-color" content="#072e48">
   <link rel="manifest" href="manifest.json">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>정준우 — 온라인 명함</title>
-  <!-- Wanted Sans (variable) loaded from jsDelivr; preload for better mobile performance -->
+
+  <!-- Fonts: Wanted Sans (variable) + JoseonGulim -->
   <link rel="preload" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css" as="style" onload="this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css"></noscript>
-  <!-- JoseonGulim for description text -->
   <style>
     @font-face {
       font-family: 'JoseonGulim';
       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
+      font-weight: normal; font-style: normal; font-display: swap;
     }
   </style>
+
+  <title>정준우 — 온라인 명함</title>
+
   <style>
-    :root{ --bg-a:#081025; --bg-b:#072e48; --glass:rgba(255,255,255,0.04); --muted:#9fb2c8; --accent:#ffd6a6; --card-radius:28px; --text:#eaf2fb }
+    :root{
+      --bg-1:#071127; --bg-2:#081b2a; --accent:#ffd6a6; --muted:#9fb2c8; --glass:rgba(255,255,255,0.04);
+      --card-radius:20px; --max-width:1100px; --text:#eaf2fb;
+    }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0}
-    body{font-family:'Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,var(--bg-a),var(--bg-b));color:var(--text);display:flex;align-items:center;justify-content:center;padding:18px}
+    body{font-family:Inter, 'Noto Sans KR', system-ui, -apple-system; background:linear-gradient(180deg,var(--bg-1),var(--bg-2)); color:var(--text); -webkit-font-smoothing:antialiased; display:flex;align-items:flex-start;justify-content:center;padding:28px}
 
-    .app-header{position:fixed;left:12px;right:12px;top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:120}
-    .menu{display:flex;gap:8px;align-items:center}
-    .menu button{background:transparent;border:0;color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
-    .menu button.active{background:var(--glass);color:var(--text);font-weight:700}
-
-    .container{width:980px;max-width:98vw;border-radius:calc(var(--card-radius));overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));backdrop-filter:blur(6px);display:grid;grid-template-columns:420px 1fr;min-height:560px;padding:0;border-radius:calc(var(--card-radius));}
-    @media (max-width:880px){.container{grid-template-columns:1fr;min-height:auto}}
-
-    /* Mobile: aim for portrait ratio ~20:9 (height:width ~2.22). We constrain the container height to match that ratio when screen is narrow */
-    @media (max-width:480px){ .container{width:94vw; /* 높이 고정 제거 — 스크롤 허용 */ max-height:92vh; overflow-y:auto; grid-template-columns:1fr;padding:12px} 
-      .hero-left{display:flex;justify-content:center}
-      .hero-right{padding:18px}
-    }
-
-    .hero-left{padding:20px;display:flex;align-items:center;justify-content:center}
-    .portrait{width:240px;height:240px;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(2,6,23,0.6)}
-    .portrait img{width:100%;height:100%;object-fit:cover;display:block}
-    .hero-right{padding:28px 36px;display:flex;flex-direction:column;gap:14px}
-    .meta h1{margin:0;font-size:36px;font-family:'Wanted Sans Variable','Wanted Sans',system-ui,Roboto,sans-serif;font-weight:800}
-    .role{color:var(--muted)}
-    .desc{color:var(--muted);font-family:'JoseonGulim',serif}
-    .contact-chips{display:flex;gap:10px;flex-wrap:wrap}
-    .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));color:var(--text);text-decoration:none;border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(4px);transition:transform .12s ease,box-shadow .12s ease;cursor:pointer}
-.chip:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
-.chip:active{transform:translateY(-1px);}
-
-
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700;color:var(--bg-a);background:linear-gradient(180deg,var(--accent),#ffb57a);box-shadow:0 8px 24px rgba(255,181,122,0.12);transition:transform .12s ease,box-shadow .12s ease}
-.btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);box-shadow:none}
-.btn:active{transform:translateY(1px)}
-    .btn.primary{background:linear-gradient(180deg,var(--accent),#ffb57a);color:var(--bg-a)}
-
-    .portfolio{width:980px;max-width:98vw;border-radius:calc(var(--card-radius));overflow:hidden;box-shadow:0 20px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));backdrop-filter:blur(6px);min-height:560px;padding:18px;display:flex;flex-direction:column;gap:12px}
-    .map-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .map-inner{touch-action:none;cursor:grab}
-    .seoul-map{max-width:100%;height:auto;width:calc(100% - 40px);display:block}
-    .seoul-map .district{fill:#081628;stroke:#2f5a7a;stroke-width:1.6;cursor:pointer;transition:fill .18s,transform .12s}
-    .seoul-map .district:hover{fill:#123a55;transform:translateY(-2px)}
-
-    .detail-panel{position:fixed;left:12px;right:12px;top:84px;bottom:12px;background:linear-gradient(180deg,rgba(8,16,37,0.98),rgba(8,16,37,0.95));border-radius:12px;padding:18px;display:none;flex-direction:column;z-index:140;overflow:auto}
-    .detail-panel.active{display:flex}
-    .detail-panel .content{margin-top:12px;color:var(--muted);display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-    .project-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:10px;border-radius:10px}
-    .project-card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
-    .project-card h4{margin:8px 0 4px}
-    .project-card p{margin:0;color:var(--muted);font-size:13px}
-
-    .hidden{display:none}
-    .card-foot{padding:10px 16px;color:var(--muted);font-size:13px;text-align:center}
-  
-    /* 몽환적인 움직이는 배경 (CSS만으로 작동, GitHub Pages에서도 동작) */
+    /* animated dreamlike background (lightweight CSS) */
     #bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-    #bg-anim::before{content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 10% 20%, rgba(255,200,160,0.06), transparent 8%),radial-gradient(circle at 80% 80%, rgba(120,180,255,0.06), transparent 10%),linear-gradient(180deg, rgba(10,30,50,0.6), rgba(4,18,35,0.6));filter:blur(36px);transform:scale(1.05);animation:drift 18s linear infinite}
-    #bg-anim::after{content:'';position:absolute;inset:-30%;background:conic-gradient(from 90deg at 50% 50%, rgba(255,255,255,0.02), rgba(255,200,160,0.01), rgba(120,180,255,0.01));mix-blend-mode:overlay;filter:blur(40px);animation:spin 30s linear infinite}
+    #bg-anim::before{content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 10% 20%, rgba(255,200,160,0.06), transparent 8%),radial-gradient(circle at 80% 80%, rgba(120,180,255,0.06), transparent 10%),linear-gradient(180deg, rgba(10,30,50,0.6), rgba(4,18,35,0.6));filter:blur(36px);transform:scale(1.05);animation:drift 20s linear infinite}
+    #bg-anim::after{content:'';position:absolute;inset:-30%;background:conic-gradient(from 90deg at 50% 50%, rgba(255,255,255,0.02), rgba(255,200,160,0.01), rgba(120,180,255,0.01));mix-blend-mode:overlay;filter:blur(40px);animation:spin 36s linear infinite}
     @keyframes drift{0%{transform:translateY(0) scale(1.05)}50%{transform:translateY(-6%) scale(1.08)}100%{transform:translateY(0) scale(1.05)}}
     @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
+    .stage{position:relative;z-index:10;width:100%;max-width:var(--max-width)}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--accent);text-decoration:none}
+    .menu{display:flex;gap:8px}
+    .menu button{background:transparent;border:0;color:var(--muted);padding:10px 12px;border-radius:10px;cursor:pointer}
+    .menu button.active{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));color:var(--text);font-weight:700}
+
+    /* main card grid */
+    .card{display:grid;grid-template-columns:360px 1fr;gap:24px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));border-radius:var(--card-radius);padding:26px;box-shadow:0 30px 80px rgba(2,6,23,0.6);backdrop-filter:blur(6px);overflow:hidden}
+
+    /* left hero */
+    .hero{display:flex;flex-direction:column;align-items:center;gap:18px;padding:8px}
+    .portrait-wrap{width:320px;max-width:78%;aspect-ratio:1/1;border-radius:28px;overflow:hidden;box-shadow:0 18px 60px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02);background:linear-gradient(135deg,#07314a,#08243a)}
+    .portrait-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .kicker{font-size:13px;color:var(--muted);text-align:center}
+
+    /* right content */
+    .meta{display:flex;flex-direction:column;gap:6px}
+    .meta h1{margin:0;font-size:36px;font-family:'Wanted Sans Variable','Wanted Sans',system-ui,Roboto,sans-serif;font-weight:800}
+    .meta .role{color:var(--muted);font-size:14px}
+    .desc{color:var(--muted);font-family:'JoseonGulim',serif;line-height:1.6}
+
+    .contact{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));color:var(--text);text-decoration:none;border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(4px);transition:transform .12s ease,box-shadow .12s ease;cursor:pointer}
+    .chip:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.45)}
+
+    .actions{display:flex;gap:10px;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700;color:var(--bg-1);background:linear-gradient(180deg,var(--accent),#ffb57a);box-shadow:0 8px 24px rgba(255,181,122,0.12);transition:transform .12s ease,box-shadow .12s ease}
+    .btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);box-shadow:none}
+
+    .profile-box{margin-top:8px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008));border:1px solid rgba(255,255,255,0.02)}
+
+    .card-foot{grid-column:1/-1;padding:12px 18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* portfolio view (map) */
+    .portfolio{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.006));}
+    .map-wrap{width:100%;height:420px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+
+    /* detail panel */
+    .detail-panel{position:fixed;left:12px;right:12px;top:84px;bottom:12px;background:linear-gradient(180deg,rgba(8,16,37,0.98),rgba(8,16,37,0.95));border-radius:12px;padding:18px;display:none;flex-direction:column;z-index:140;overflow:auto}
+    .detail-panel.active{display:flex}
+
+    /* responsive tweaks */
+    @media (max-width:980px){ .card{grid-template-columns:320px 1fr} }
+    @media (max-width:720px){ body{padding:16px} .card{grid-template-columns:1fr;gap:12px;padding:18px} .portrait-wrap{max-width:56%;border-radius:20px} .meta h1{font-size:28px} .map-wrap{height:320px} }
+    @media (max-width:420px){ .portrait-wrap{max-width:64%} .meta h1{font-size:22px} }
   </style>
 </head>
 <body>
-  <header class="app-header">
-    <div class="left">
-      <a class="logo" href="#" aria-label="홈"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden><rect x="2" y="2" width="20" height="20" rx="5" fill="#fff" opacity="0.06"></rect><path d="M6 8h12M6 14h12" stroke="#fff" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"></path></svg><span style="color:var(--accent)">정준우</span></a>
-    </div>
-    <nav class="menu" role="tablist" aria-label="메뉴">
-      <button id="tab-card" class="active" role="tab">명함</button>
-      <button id="tab-portfolio" role="tab">작품 활동</button>
-    </nav>
-    <div class="lang">
-      <button id="btn-ko" class="active">한국어</button>
-      <button id="btn-en">English</button>
-    </div>
-  </header>
+  <div id="bg-anim" aria-hidden></div>
+  <div class="stage">
+    <header class="header">
+      <a class="logo" href="#"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden><rect x="2" y="2" width="20" height="20" rx="5" fill="#fff" opacity="0.06"></rect><path d="M6 8h12M6 14h12" stroke="#fff" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"></path></svg><span style="color:var(--accent)">정준우</span></a>
+      <nav class="menu" role="tablist" aria-label="메뉴">
+        <button id="tab-card" class="active" role="tab">명함</button>
+        <button id="tab-portfolio" role="tab">작품 활동</button>
+      </nav>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="lang"><button id="btn-ko" class="active">한국어</button><button id="btn-en">English</button></div>
+      </div>
+    </header>
 
-  <!-- card view -->
-  <main id="card-view" class="container" role="main" aria-labelledby="title">
-    <section class="hero-left"><div class="portrait"><img id="portrait-img" src="assets/IMG_9121.svg" alt="정준우 사진"></div></section>
-    <section class="hero-right">
-      <div class="meta"><h1 id="title">정준우</h1><div class="role" id="role">서울 사진 · 영상 제작자</div></div>
-      <p class="desc" id="desc" style="margin-bottom:36px;white-space:pre-wrap">다양한 서울을 사진과 영상으로 표현합니다.<br><br>하단의 인스타그램을 확인하시기 바랍니다.<br>문의사항은 이메일로 부탁드립니다.</p>
-      <h3 style="margin:0 0 8px 0;color:var(--muted);font-size:14px">Profile</h3>
-      <div id="profile-list" aria-label="프로필 목록" style="min-height:10px;padding:8px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);white-space:pre-wrap;overflow:auto;margin-top:4px;">
-        <ul style="list-style:none;margin:0;padding:4px 0 0 0;display:flex;flex-direction:column;gap:6px">
-          <li><a href="#" class="career-link" data-id="c2022-1" style="color:var(--text);text-decoration:none">2022</a></li>
-          <li><a href="#" class="career-link" data-id="c2022-2" style="color:var(--text);text-decoration:none"> 서울영상공모전 수상</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-1" style="color:var(--text);text-decoration:none">2023</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-2" style="color:var(--text);text-decoration:none"> 부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-3" style="color:var(--text);text-decoration:none"> TikTok 포토 크리에이터 활동</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-4" style="color:var(--text);text-decoration:none"> 궁금했어, 기후변화(나무생각)에 사진 수록</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-5" style="color:var(--text);text-decoration:none"> 한국청소년사진공모전 은상·동상</a></li>
-          <li><a href="#" class="career-link" data-id="c2023-6" style="color:var(--text);text-decoration:none"> 강남구 영상 공모전 1·2회 베스트제작상</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-1" style="color:var(--text);text-decoration:none">2024</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-2" style="color:var(--text);text-decoration:none"> 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-3" style="color:var(--text);text-decoration:none"> 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-4" style="color:var(--text);text-decoration:none"> 서울특별시 챌린지 서울상(1등상)</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-5" style="color:var(--text);text-decoration:none"> 한국청소년 사진제 우수상 수상</a></li>
-          <li><a href="#" class="career-link" data-id="c2024-6" style="color:var(--text);text-decoration:none"> 서울시민기자</a></li>
-        </ul>
-        <small style="display:block;margin-top:0px;color:var(--muted)">각 항목을 누르면 세부 페이지로 이동합니다.</small>
+    <main class="card" id="card-view" role="main" aria-labelledby="title">
+      <section class="hero">
+        <div class="portrait-wrap">
+          <img id="portrait-img" src="assets/IMG_9121.JPEG" alt="정준우 프로필">
+        </div>
+        <div class="kicker">크리에이티브 디렉터 · 사진·영상</div>
+        <div style="width:100%;display:flex;justify-content:center">
+          <a class="chip" href="#instagram" id="instagram-link">@_junsome</a>
+        </div>
+      </section>
+
+      <section>
+        <div class="meta">
+          <h1 id="title">정준우</h1>
+          <div class="role" id="role">서울 사진 · 영상 제작자</div>
+        </div>
+
+        <div class="profile-box">
+          <p class="desc" id="desc" style="margin:0 0 36px 0;white-space:pre-wrap">다양한 서울을 사진과 영상으로 표현합니다.<br><br>활동은 하단의 인스타그램에서 확인하실 수 있습니다.<br>문의사항은 하단의 이메일로 부탁드립니다.</p>
+
+          <h3 style="margin:0 0 6px 0;color:var(--muted);font-size:14px">Profile</h3>
+          <div id="profile-list" aria-label="프로필 목록" style="min-height:10px;padding:8px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);white-space:pre-wrap;overflow:auto;margin-top:4px;">
+            <ul style="list-style:none;margin:0;padding:4px 0 0 0;display:flex;flex-direction:column;gap:6px">
+              <li><a href="#" class="career-link" data-id="c2022-2" style="color:var(--text);text-decoration:none">2022 — 서울영상공모전 수상</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-2" style="color:var(--text);text-decoration:none">2023 — 부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-3" style="color:var(--text);text-decoration:none">2023 — TikTok 포토 크리에이터 활동</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-4" style="color:var(--text);text-decoration:none">2023 — 궁금했어, 기후변화(나무생각)에 사진 수록</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-5" style="color:var(--text);text-decoration:none">2023 — 한국청소년사진공모전 은상·동상</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-6" style="color:var(--text);text-decoration:none">2023 — 강남구 영상 공모전 1·2회 베스트제작상</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-2" style="color:var(--text);text-decoration:none">2024 — 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-3" style="color:var(--text);text-decoration:none">2024 — 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-4" style="color:var(--text);text-decoration:none">2024 — 서울특별시 챌린지 서울상(1등상)</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-5" style="color:var(--text);text-decoration:none">2024 — 한국청소년 사진제 우수상 수상</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-6" style="color:var(--text);text-decoration:none">2024 — 서울시민기자</a></li>
+            </ul>
+            <small style="display:block;margin-top:6px;color:var(--muted)">각 항목을 누르면 세부 페이지로 이동합니다.</small>
+          </div>
+
+          <div class="contact" style="margin-top:12px">
+            <h3 style="margin:0;color:var(--muted);font-size:14px">Contact</h3>
+            <div class="chips">
+              <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
+              <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
+              <a class="chip" id="instagram" href="https://instagram.com/_junsome" target="_blank" rel="noopener">@_junsome</a>
+            </div>
+            <div class="actions">
+              <button class="btn" id="download-vcard">vCard 다운로드</button>
+              <button class="btn ghost" id="copy-email">이메일 복사</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="card-foot">Made with care • 정준우 — Responsive · Mobile-optimized</div>
+    </main>
+
+    <section id="portfolio-view" class="portfolio hidden" aria-hidden="true">
+      <h2 style="margin:6px 0;color:var(--text)">작품 활동 — 서울 지도로 보기</h2>
+      <div class="map-wrap">
+        <div id="map-inner" class="map-inner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <div id="svg-container" style="width:100%;height:100%"></div>
+        </div>
       </div>
-      <h3 style="margin:6px 0 6px 0;color:var(--muted);font-size:14px">Contact</h3>
-      <div class="contact-chips">
-        <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
-        <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
-        <a class="chip" id="instagram" href="https://instagram.com/_junsome" target="_blank" rel="noopener">@_junsome</a>
-      </div>
-      <div style="margin-top:12px"><button class="chip" id="download-vcard">명함 다운로드</button> <button class="chip" id="copy-email">이메일 복사</button></div>
+      <div style="color:var(--muted);font-size:13px;margin-top:8px">지도에서 구를 터치(또는 클릭)하면 해당 구의 작품 목록 패널이 열립니다.</div>
     </section>
-    <div class="card-foot">Web Builder 정준우 — Mobile-optimized</div>
-  </main>
 
-  <!-- portfolio view -->
-  <section id="portfolio-view" class="portfolio hidden" aria-hidden="true">
-    <h2 style="margin:6px 0;color:var(--text)">작품 활동 — 서울 지도로 보기</h2>
-    <div class="map-wrap">
-      <div id="map-inner" class="map-inner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-        <div id="svg-container" style="width:100%;max-width:1000px"></div>
-      </div>
-    </div>
-    <div style="color:var(--muted);font-size:13px">지도를 누르면 해당 장소의 작품 목록이 보입니다.</div>
-  </section>
-
-  <!-- district detail panel (shows inside app) -->
-  <aside id="detail" class="detail-panel" role="dialog" aria-hidden="true">
-    <div class="head"><strong id="detail-title" style="font-size:20px;color:var(--text)"></strong><div style="display:flex;gap:8px"><button id="open-detail-page" class="chip">상세 페이지 열기</button><button id="close-detail" class="chip">닫기</button></div></div>
-    <div class="content" id="detail-content">로딩 중...</div>
-  </aside>
+    <aside id="detail" class="detail-panel" role="dialog" aria-hidden="true">
+      <div class="head" style="display:flex;justify-content:space-between;align-items:center"><strong id="detail-title" style="font-size:20px;color:var(--text)"></strong><div style="display:flex;gap:8px"><button id="open-detail-page" class="chip">상세 페이지 열기</button><button id="close-detail" class="chip">닫기</button></div></div>
+      <div class="content" id="detail-content">로딩 중...</div>
+    </aside>
+  </div>
 
   <script>
-    // helper
-    const $ = id => document.getElementById(id);
-
-    // tabs
-    const tabCard = $('tab-card');
-    const tabPortfolio = $('tab-portfolio');
-    const cardView = $('card-view');
-    const portfolioView = $('portfolio-view');
+    // lightweight core JS: tabs, i18n, careers, SVG load, submissions with IndexedDB
+    const $ = id=>document.getElementById(id);
+    const tabCard = $('tab-card'), tabPortfolio = $('tab-portfolio'), cardView = $('card-view'), portfolioView = $('portfolio-view');
     function showCard(){ tabCard.classList.add('active'); tabPortfolio.classList.remove('active'); cardView.classList.remove('hidden'); cardView.setAttribute('aria-hidden','false'); portfolioView.classList.add('hidden'); portfolioView.setAttribute('aria-hidden','true'); }
     function showPortfolio(){ tabPortfolio.classList.add('active'); tabCard.classList.remove('active'); portfolioView.classList.remove('hidden'); portfolioView.setAttribute('aria-hidden','false'); cardView.classList.add('hidden'); cardView.setAttribute('aria-hidden','true'); }
-    tabCard && tabCard.addEventListener('click', showCard);
-    tabPortfolio && tabPortfolio.addEventListener('click', showPortfolio);
+    tabCard && tabCard.addEventListener('click', showCard); tabPortfolio && tabPortfolio.addEventListener('click', showPortfolio);
 
-    // projects sample
-    const projects = { jongno:[{title:'종로 A', img:'',desc:'샘플'}] };
+    // simple i18n
+    const btnKo = $('btn-ko'), btnEn = $('btn-en');
+    const i18n = { ko:{card:'명함',portfolio:'작품 활동',contact:'Contact',vcard:'vCard 다운로드',copy:'이메일 복사'}, en:{card:'Card',portfolio:'Portfolio',contact:'Contact',vcard:'Download vCard',copy:'Copy email'} };
+    function applyLang(lang){ if(!i18n[lang]) return; $('tab-card').textContent = i18n[lang].card; $('tab-portfolio').textContent = i18n[lang].portfolio; const ch = document.querySelector('.profile-box h3'); if(ch) ch.textContent = i18n[lang].contact; const vb = $('download-vcard'); if(vb) vb.textContent = i18n[lang].vcard; const cb = $('copy-email'); if(cb) cb.textContent = i18n[lang].copy; if(lang==='ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); } else { btnEn.classList.add('active'); btnKo.classList.remove('active'); } localStorage.setItem('site_lang',lang); }
+    btnKo && btnKo.addEventListener('click', ()=>applyLang('ko')); btnEn && btnEn.addEventListener('click', ()=>applyLang('en'));
+    (function(){ const saved = localStorage.getItem('site_lang') || (navigator.language && navigator.language.startsWith('en') ? 'en':'ko'); applyLang(saved); })();
 
-    // IndexedDB helpers for storing images (avoids localStorage size limits)
-    const dbPromise = (function(){
-      return new Promise((resolve,reject)=>{
-        const req = indexedDB.open('junsome-db',1);
-        req.onupgradeneeded = ()=>{ const db = req.result; if(!db.objectStoreNames.contains('images')) db.createObjectStore('images',{keyPath:'id'}); };
-        req.onsuccess = ()=>resolve(req.result);
-        req.onerror = ()=>reject(req.error);
-      });
-    })();
+    // careers data
+    const careers = [
+      {id:'c2022-2', title:'서울영상공모전 수상 (2022)', desc:'서울영상공모전에서 수상하며 영상 제작 역량을 인정받음.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-2', title:'부산광역시 뉴미디어멤버스 등(2023)', desc:'부산광역시 뉴미디어멤버스 활동 및 표창 수상.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-3', title:'TikTok 포토 크리에이터 활동 (2023)', desc:'TikTok에서 포토 크리에이터 활동.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-4', title:'기후변화 프로젝트 수록 (2023)', desc:'출판물에 사진 수록.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2023-5', title:'한국청소년사진공모전 수상 (2023)', desc:'은상·동상 수상.', img:'assets/IMG_9121.JPEG'},
+      {id:'c2024-2', title:'영등포구 SNS미디어기자단 표창 (2024)', desc:'영등포구청장 표창 수상.', img:'assets/IMG_9121.JPEG'}
+    ];
+    function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[ch])); }
+    function openCareerPage(id){ const c = careers.find(x=>x.id===id); if(!c) return alert('찾을 수 없습니다'); const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(c.title)}</title><style>body{margin:0;font-family:Inter,Arial;background:linear-gradient(180deg,#071226,#081025);color:#eaf2fb;padding:24px;display:flex;align-items:center;justify-content:center} .card{max-width:880px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:28px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.6)} h1{margin:0 0 12px 0;font-size:28px} p{color:#c9dbe8;line-height:1.6} .media{display:flex;gap:16px;align-items:flex-start;margin-top:16px} .media img{width:320px;max-width:40%;height:auto;border-radius:12px;object-fit:cover} @media(max-width:600px){.media{flex-direction:column}.media img{max-width:100%;width:100%}}</style></head><body><div class="card"><h1>${escapeHtml(c.title)}</h1><p>${escapeHtml(c.desc)}</p><div class="media"><img src="${c.img}" alt="${escapeHtml(c.title)}"><div style="flex:1"></div></div></div></body></html>`; const blob=new Blob([html],{type:'text/html'}); window.open(URL.createObjectURL(blob),'_blank'); }
+    document.addEventListener('click', function(e){ const a = e.target.closest && e.target.closest('.career-link'); if(a){ e.preventDefault(); openCareerPage(a.getAttribute('data-id')); } }, false);
 
-    async function saveImageBlob(id, file){ try{ const db = await dbPromise; return new Promise((res,rej)=>{ const tx = db.transaction('images','readwrite'); tx.objectStore('images').put({id,blob:file}); tx.oncomplete = ()=> res(id); tx.onerror = ()=> rej(tx.error); }); }catch(e){ console.error('saveImageBlob error',e); throw e; } }
-    async function getImageBlob(id){ try{ const db = await dbPromise; return new Promise((res,rej)=>{ const tx = db.transaction('images','readonly'); const rq = tx.objectStore('images').get(id); rq.onsuccess = ()=> res(rq.result ? rq.result.blob : null); rq.onerror = ()=> rej(rq.error); }); }catch(e){ console.error('getImageBlob error',e); return null; } }
+    // SVG load for map & district handlers
+    const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Seoul_districts.svg';
+    async function loadSVG(){ const container = $('svg-container'); if(!container) return; try{ const res = await fetch(SVG_URL); if(!res.ok) throw new Error('SVG fetch failed'); const text = await res.text(); container.innerHTML = text; const svg = container.querySelector('svg'); if(svg){ svg.classList.add('seoul-map'); attachDistrictHandlers(svg); }}catch(e){ console.warn('svg failed',e); container.innerHTML = '<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg"><g id="districts"><path id="jongno" class="district" data-name="종로구" d="M220,120 L380,110 L420,200 L310,240 L230,200 Z" /></g></svg>'; const svg = container.querySelector('svg'); if(svg) attachDistrictHandlers(svg); }}
+    function attachDistrictHandlers(svg){ try{ const nodes = svg.querySelectorAll('[id]'); nodes.forEach(n=>{ if(!n.classList.contains('district')) n.classList.add('district'); n.style.touchAction='manipulation'; n.addEventListener('click', (e)=>{ e.preventDefault(); const id = n.id||''; const name = n.getAttribute('data-name')||n.id; openDistrictDetail(id||name,name); }); }); }catch(e){console.warn(e);} }
 
-    function createObjectURLFromBlob(blob){ return blob ? URL.createObjectURL(blob) : null; }
+    // submissions: keep using localStorage metadata and IndexedDB for blobs
+    const dbPromise = (function(){ return new Promise((resolve,reject)=>{ const req = indexedDB.open('junsome-db',1); req.onupgradeneeded = ()=>{ const db = req.result; if(!db.objectStoreNames.contains('images')) db.createObjectStore('images',{keyPath:'id'}); }; req.onsuccess = ()=>resolve(req.result); req.onerror = ()=>reject(req.error); }); })();
+    async function saveImageBlob(id,file){ const db = await dbPromise; return new Promise((res,rej)=>{ const tx=db.transaction('images','readwrite'); tx.objectStore('images').put({id,blob:file}); tx.oncomplete = ()=>res(id); tx.onerror=()=>rej(tx.error); }); }
+    async function getImageBlob(id){ const db = await dbPromise; return new Promise((res,rej)=>{ const tx=db.transaction('images','readonly'); const rq=tx.objectStore('images').get(id); rq.onsuccess=()=>res(rq.result?rq.result.blob:null); rq.onerror=()=>rej(rq.error); }); }
 
-    // portrait handling: try repo assets then fallbacks, then local override via IndexedDB
-    const portraitImg = $('portrait-img');
-    const portraitCandidates = ['assets/IMG_9121.JPEG','assets/IMG_9121.JPEG','assets/IMG_9121.jpg','assets/IMG_9121.png','assets/IMG_9121.svg'];
-    function trySetPortraitFromCandidates(cands){ let i=0; function tryNext(){ if(i>=cands.length){ return; } portraitImg.src = cands[i++]; portraitImg.onerror = tryNext; }
-      tryNext(); }
-
-    async function loadPortrait(){ const key = localStorage.getItem('portrait_img'); if(key){ const blob = await getImageBlob(key); if(blob){ portraitImg.src = createObjectURLFromBlob(blob); return; } }
-      trySetPortraitFromCandidates(portraitCandidates);
-    }
-
-    // add portrait upload UI (creates hidden input + button)
-    
-
-    // storage helpers for submissions metadata (still in localStorage)
     function submissionsKey(id){ return 'submissions_' + id; }
     function loadSubmissions(id){ try{ const raw = localStorage.getItem(submissionsKey(id)); return raw ? JSON.parse(raw) : []; }catch(e){ return []; } }
-    function saveSubmissions(id, arr){ localStorage.setItem(submissionsKey(id), JSON.stringify(arr)); }
+    function saveSubmissions(id,arr){ localStorage.setItem(submissionsKey(id), JSON.stringify(arr)); }
+    function ensureSubpages(count){ let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta||!Array.isArray(meta.pages)||meta.pages.length<count){ meta={pages:[]}; for(let i=1;i<=count;i++){ const id='subpage_'+i; meta.pages.push({id,title:'하위 페이지 '+i,assignedTo:null}); if(localStorage.getItem(submissionsKey(id))===null) localStorage.setItem(submissionsKey(id),JSON.stringify([])); } localStorage.setItem('subpages_meta',JSON.stringify(meta)); } return meta; }
+    function getOrAssignSubpageForDistrict(districtId,districtName){ if(!districtId) return districtId||districtName; let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta||!Array.isArray(meta.pages)) meta=ensureSubpages(25); let page = meta.pages.find(p=>p.assignedTo===districtId); if(!page){ page = meta.pages.find(p=>!p.assignedTo); if(page){ page.assignedTo=districtId; if(districtName) page.title=districtName; localStorage.setItem('subpages_meta',JSON.stringify(meta)); } else return districtId; } return page.id; }
 
-    // ensure 25 subpages
-    function ensureSubpages(count){ let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta || !Array.isArray(meta.pages) || meta.pages.length < count){ meta={pages:[]}; for(let i=1;i<=count;i++){ const id='subpage_'+i; meta.pages.push({id,title:'하위 페이지 '+i,assignedTo:null}); if(localStorage.getItem(submissionsKey(id))===null) localStorage.setItem(submissionsKey(id), JSON.stringify([])); } localStorage.setItem('subpages_meta', JSON.stringify(meta)); } return meta; }
-
-    function getOrAssignSubpageForDistrict(districtId,districtName){ if(!districtId) return districtId||districtName; let meta=null; try{ meta=JSON.parse(localStorage.getItem('subpages_meta')||'null'); }catch(e){ meta=null; } if(!meta || !Array.isArray(meta.pages)) meta=ensureSubpages(25); let page = meta.pages.find(p=>p.assignedTo===districtId); if(!page){ page = meta.pages.find(p=>!p.assignedTo); if(page){ page.assignedTo = districtId; if(districtName) page.title = districtName; localStorage.setItem('subpages_meta', JSON.stringify(meta)); } else return districtId; } return page.id; }
-
-    // create submission card (supports img dataUrl or imgKey stored in IDB)
-    function createSubmissionCard(item, key){ const c=document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.alt=item.title || ''; img.src = item.img || ''; img.style.background='rgba(0,0,0,0.04)'; // placeholder background
-      const h=document.createElement('h4'); h.textContent=item.title || '';
-      const p=document.createElement('p'); p.textContent=item.desc || '';
-      c.appendChild(img); c.appendChild(h); c.appendChild(p);
-      // if item has imgKey, load blob and set src
-      if(item.imgKey){ getImageBlob(item.imgKey).then(blob=>{ if(blob){ img.src = createObjectURLFromBlob(blob); } }); }
-
+    function createSubmissionCard(item,key){ const c=document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.alt=item.title||''; img.style.width='100%'; img.style.height='140px'; img.style.objectFit='cover'; img.style.borderRadius='8px'; img.style.background='rgba(0,0,0,0.04)'; if(item.img) img.src = item.img; else if(item.imgKey){ getImageBlob(item.imgKey).then(b=>{ if(b) img.src = URL.createObjectURL(b); }); }
+      const h=document.createElement('h4'); h.textContent=item.title||''; const p=document.createElement('p'); p.textContent=item.desc||''; c.appendChild(img); c.appendChild(h); c.appendChild(p);
       const actions=document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px'; actions.style.marginTop='8px'; const editBtn=document.createElement('button'); editBtn.className='chip'; editBtn.textContent='수정'; const delBtn=document.createElement('button'); delBtn.className='chip'; delBtn.textContent='삭제'; actions.appendChild(editBtn); actions.appendChild(delBtn); c.appendChild(actions);
       editBtn.addEventListener('click', ()=>openEditDialog(item,key,c)); delBtn.addEventListener('click', ()=>{ if(confirm('정말 삭제하시겠습니까?')){ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr.splice(idx,1); saveSubmissions(key,arr); c.remove(); } } }); return c; }
 
-    function openEditDialog(item,key,cardElement){ const form=document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px'; const title=document.createElement('input'); title.value=item.title||''; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)'; const desc=document.createElement('textarea'); desc.value=item.desc||''; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)'; const file=document.createElement('input'); file.type='file'; file.accept='image/*'; const save=document.createElement('button'); save.className='btn primary'; save.textContent='저장'; const cancel=document.createElement('button'); cancel.className='btn'; cancel.textContent='취소'; form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel); cardElement.appendChild(form);
-      let newFileBlob=null; file.addEventListener('change',(e)=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; newFileBlob = f; }); cancel.addEventListener('click', ()=>form.remove()); save.addEventListener('click', async ()=>{ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newFileBlob){ const imgKey = 'img_' + Date.now(); await saveImageBlob(imgKey, newFileBlob); arr[idx].imgKey = imgKey; } saveSubmissions(key,arr); cardElement.querySelector('h4').textContent = arr[idx].title; cardElement.querySelector('p').textContent = arr[idx].desc; if(arr[idx].imgKey){ const b = await getImageBlob(arr[idx].imgKey); if(b) cardElement.querySelector('img').src = createObjectURLFromBlob(b); } form.remove(); } }); }
+    function openEditDialog(item,key,cardElement){ const form=document.createElement('div'); form.style.display='flex'; form.style.flexDirection='column'; form.style.gap='8px'; form.style.marginTop='8px'; const title=document.createElement('input'); title.value=item.title||''; title.style.padding='8px'; title.style.borderRadius='8px'; title.style.background='transparent'; title.style.border='1px solid rgba(255,255,255,0.04)'; title.style.color='var(--text)'; const desc=document.createElement('textarea'); desc.value=item.desc||''; desc.rows=3; desc.style.padding='8px'; desc.style.borderRadius='8px'; desc.style.background='transparent'; desc.style.border='1px solid rgba(255,255,255,0.04)'; desc.style.color='var(--text)'; const file=document.createElement('input'); file.type='file'; file.accept='image/*'; const save=document.createElement('button'); save.className='btn'; save.textContent='저장'; const cancel=document.createElement('button'); cancel.className='chip'; cancel.textContent='취소'; form.appendChild(title); form.appendChild(desc); form.appendChild(file); form.appendChild(save); form.appendChild(cancel); cardElement.appendChild(form);
+      let newFile=null; file.addEventListener('change',(e)=>{ newFile = e.target.files && e.target.files[0]; }); cancel.addEventListener('click', ()=>form.remove()); save.addEventListener('click', async ()=>{ const arr=loadSubmissions(key); const idx=arr.findIndex(x=>x.id===item.id); if(idx>-1){ arr[idx].title = title.value.trim()||arr[idx].title; arr[idx].desc = desc.value.trim()||arr[idx].desc; if(newFile){ const k = 'img_' + Date.now(); await saveImageBlob(k,newFile); arr[idx].imgKey = k; } saveSubmissions(key,arr); cardElement.querySelector('h4').textContent = arr[idx].title; cardElement.querySelector('p').textContent = arr[idx].desc; if(arr[idx].imgKey){ const b = await getImageBlob(arr[idx].imgKey); if(b) cardElement.querySelector('img').src = URL.createObjectURL(b); } form.remove(); } }); }
 
-    async function renderDetailContent(pageKey, displayName){
-      const content = $('detail-content'); content.innerHTML = '';
-
-      // upload form (built without global IDs to avoid clashes)
-      const formWrap = document.createElement('div'); formWrap.style.marginBottom = '12px';
-      formWrap.style.background = 'linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008))';
-      formWrap.style.padding = '12px'; formWrap.style.borderRadius = '10px';
-
-      const h3 = document.createElement('h3'); h3.style.margin = '0 0 12px 0'; h3.style.color = 'var(--text)'; h3.textContent = '내 작품 등록';
-      const p = document.createElement('p'); p.style.color = 'var(--muted)'; p.style.margin = '0 0 12px 0'; p.textContent = '사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.';
-
-      const inputTitle = document.createElement('input'); inputTitle.placeholder = '작품 제목'; inputTitle.style.padding='8px'; inputTitle.style.borderRadius='8px'; inputTitle.style.border='1px solid rgba(255,255,255,0.04)'; inputTitle.style.background='transparent'; inputTitle.style.color='var(--text)';
-      const inputDesc = document.createElement('textarea'); inputDesc.placeholder = '간단한 설명'; inputDesc.rows = 3; inputDesc.style.padding='8px'; inputDesc.style.borderRadius='8px'; inputDesc.style.border='1px solid rgba(255,255,255,0.04)'; inputDesc.style.background='transparent'; inputDesc.style.color='var(--text)';
-      const inputFile = document.createElement('input'); inputFile.type = 'file'; inputFile.accept = 'image/*';
-      const controls = document.createElement('div'); controls.style.display = 'flex'; controls.style.gap = '8px'; controls.style.alignItems = 'center';
-      const uploadBtn = document.createElement('button'); uploadBtn.className = 'btn primary'; uploadBtn.textContent = '업로드';
-      const previewBox = document.createElement('div'); previewBox.style.width='84px'; previewBox.style.height='64px'; previewBox.style.borderRadius='8px'; previewBox.style.background='rgba(255,255,255,0.02)'; previewBox.style.display='none'; previewBox.style.overflow='hidden';
-      const previewImg = document.createElement('img'); previewImg.style.width='100%'; previewImg.style.height='100%'; previewImg.style.objectFit='cover'; previewBox.appendChild(previewImg);
-      controls.appendChild(uploadBtn); controls.appendChild(previewBox);
-
-      formWrap.appendChild(h3); formWrap.appendChild(p); formWrap.appendChild(inputTitle); formWrap.appendChild(inputDesc); formWrap.appendChild(inputFile); formWrap.appendChild(controls);
-      content.appendChild(formWrap);
-
-      const key = pageKey || displayName || 'global';
-
-      // show existing sample projects first
-      const sampleKey = (displayName && displayName.toLowerCase()) || '';
-      const list = projects[sampleKey] || projects[pageKey] || [];
-      if(list.length){ const sampleWrap = document.createElement('div'); sampleWrap.style.marginTop='8px'; const h4=document.createElement('h4'); h4.style.color='var(--text)'; h4.style.margin='8px 0'; h4.textContent='일반 프로젝트'; sampleWrap.appendChild(h4); const sampleGrid=document.createElement('div'); sampleGrid.style.display='grid'; sampleGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; sampleGrid.style.gap='12px'; list.forEach(pj=>{ const c = document.createElement('div'); c.className='project-card'; const img=document.createElement('img'); img.src = pj.img || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%23081e2f"/><text x="50%" y="50%" fill="%23fff" font-size="24" text-anchor="middle">'+encodeURIComponent(pj.title)+'</text></svg>'; const hh=document.createElement('h4'); hh.textContent = pj.title; const dd=document.createElement('p'); dd.textContent = pj.desc; c.appendChild(img); c.appendChild(hh); c.appendChild(dd); sampleGrid.appendChild(c); }); sampleWrap.appendChild(sampleGrid); content.appendChild(sampleWrap); }
-
-      // user submissions grid
-      const subs = loadSubmissions(key);
-      const userWrap = document.createElement('div'); userWrap.style.marginTop='12px'; const uh=document.createElement('h4'); uh.style.color='var(--text)'; uh.style.margin='8px 0'; uh.textContent='커뮤니티 업로드'; userWrap.appendChild(uh);
-      const userGrid = document.createElement('div'); userGrid.style.display='grid'; userGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; userGrid.style.gap='12px'; subs.forEach(s=> userGrid.appendChild(createSubmissionCard(s,key)));
-      content.appendChild(userWrap); content.appendChild(userGrid);
-
-      // handle file preview (use blob URLs and store blob on upload to IDB)
-      let currentFileBlob = null;
-      inputFile.addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.'); previewImg.src = createObjectURLFromBlob(f); previewBox.style.display = 'block'; currentFileBlob = f; });
-
-      // upload handler (stores blob in IDB and reference in submissions metadata)
-      uploadBtn.addEventListener('click', async ()=>{
-        const title = inputTitle.value.trim() || '무제';
-        const desc = inputDesc.value.trim() || '';
-        if(!currentFileBlob) return alert('업로드할 이미지를 선택하세요.');
-        const arr = loadSubmissions(key);
-        const itemId = 's_' + Date.now();
-        // store blob in IDB under key itemId
-        await saveImageBlob(itemId, currentFileBlob);
-        const item = { id: itemId, title, desc, imgKey: itemId, createdAt: Date.now() };
-        arr.unshift(item); saveSubmissions(key, arr);
-        userGrid.insertBefore(createSubmissionCard(item, key), userGrid.firstChild);
-        // reset
-        inputTitle.value=''; inputDesc.value=''; inputFile.value=''; previewBox.style.display='none'; previewImg.src=''; currentFileBlob = null;
-      });
-
-      // add click handler for open-detail-page to include blob images (async)
-      $('open-detail-page').onclick = async ()=>{
-        const list = loadSubmissions(key).concat(projects[(pageKey||'').toLowerCase()]||projects[displayName]||[]);
-        // for any item with imgKey, create objectURLs and include them
-        const parts = await Promise.all(list.map(async p=>{
-          let imgTag = '';
-          if(p.img) imgTag = `<img src="${p.img}">`;
-          else if(p.imgKey){ const b = await getImageBlob(p.imgKey); if(b){ const url = createObjectURLFromBlob(b); imgTag = `<img src="${url}">`; }
-          }
-          return `<div class="proj"><h3>${escapeHtml(p.title||'')}</h3><p>${escapeHtml(p.desc||'')}</p>${imgTag}</div>`;
-        }));
-        const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${encodeURIComponent(displayName||key)} — 상세</title><style>body{background:#081025;color:#fff;font-family:Arial;padding:20px}.proj{border-radius:8px;padding:12px;background:#071827;margin-bottom:10px} img{max-width:100%;height:auto;border-radius:6px}</style></head><body><h1>${escapeHtml(displayName||key)} — 작품 목록</h1>${parts.join('') || '<p>등록된 프로젝트가 없습니다.</p>'}</body></html>`;
-        const blob = new Blob([html], {type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank');
-      };
+    async function renderDetailContent(pageKey, displayName){ const content = $('detail-content'); content.innerHTML='';
+      const formWrap=document.createElement('div'); formWrap.style.marginBottom='12px'; formWrap.style.background='linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.008))'; formWrap.style.padding='12px'; formWrap.style.borderRadius='10px';
+      const h3=document.createElement('h3'); h3.style.margin='0 0 12px 0'; h3.style.color='var(--text)'; h3.textContent='내 작품 등록'; const p=document.createElement('p'); p.style.color='var(--muted)'; p.style.margin='0 0 12px 0'; p.textContent='사진과 간단한 설명을 업로드하세요. 업로드 후에는 수정 및 삭제가 가능합니다.';
+      const inputTitle=document.createElement('input'); inputTitle.placeholder='작품 제목'; inputTitle.style.padding='8px'; inputTitle.style.borderRadius='8px'; inputTitle.style.border='1px solid rgba(255,255,255,0.04)'; inputTitle.style.background='transparent'; inputTitle.style.color='var(--text)'; const inputDesc=document.createElement('textarea'); inputDesc.placeholder='간단한 설명'; inputDesc.rows=3; inputDesc.style.padding='8px'; inputDesc.style.borderRadius='8px'; inputDesc.style.border='1px solid rgba(255,255,255,0.04)'; inputDesc.style.background='transparent'; inputDesc.style.color='var(--text)'; const inputFile=document.createElement('input'); inputFile.type='file'; inputFile.accept='image/*'; const controls=document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.alignItems='center'; const uploadBtn=document.createElement('button'); uploadBtn.className='btn'; uploadBtn.textContent='업로드'; const previewBox=document.createElement('div'); previewBox.style.width='84px'; previewBox.style.height='64px'; previewBox.style.borderRadius='8px'; previewBox.style.background='rgba(255,255,255,0.02)'; previewBox.style.display='none'; previewBox.style.overflow='hidden'; const previewImg=document.createElement('img'); previewImg.style.width='100%'; previewImg.style.height='100%'; previewImg.style.objectFit='cover'; previewBox.appendChild(previewImg); controls.appendChild(uploadBtn); controls.appendChild(previewBox);
+      formWrap.appendChild(h3); formWrap.appendChild(p); formWrap.appendChild(inputTitle); formWrap.appendChild(inputDesc); formWrap.appendChild(inputFile); formWrap.appendChild(controls); content.appendChild(formWrap);
+      const key = pageKey || displayName || 'global'; const subs = loadSubmissions(key);
+      const userGrid=document.createElement('div'); userGrid.style.display='grid'; userGrid.style.gridTemplateColumns='repeat(auto-fill,minmax(220px,1fr))'; userGrid.style.gap='12px'; subs.forEach(s=>userGrid.appendChild(createSubmissionCard(s,key))); content.appendChild(userGrid);
+      let currentBlob=null; inputFile.addEventListener('change',(e)=>{ const f=e.target.files && e.target.files[0]; if(!f) return; if(!f.type.startsWith('image/')) return alert('이미지 파일을 선택하세요.'); previewImg.src = URL.createObjectURL(f); previewBox.style.display='block'; currentBlob = f; });
+      uploadBtn.addEventListener('click', async ()=>{ const title = inputTitle.value.trim() || '무제'; const desc = inputDesc.value.trim() || ''; if(!currentBlob) return alert('업로드할 이미지를 선택하세요.'); const arr = loadSubmissions(key); const itemId = 's_' + Date.now(); await saveImageBlob(itemId,currentBlob); const item = { id:itemId, title, desc, imgKey:itemId, createdAt:Date.now() }; arr.unshift(item); saveSubmissions(key,arr); userGrid.insertBefore(createSubmissionCard(item,key), userGrid.firstChild); inputTitle.value=''; inputDesc.value=''; inputFile.value=''; previewBox.style.display='none'; previewImg.src=''; currentBlob=null; });
     }
 
-    function openDistrictDetail(id,name){ const pageKey = getOrAssignSubpageForDistrict(id,name); $('detail-title').textContent = name || pageKey; renderDetailContent(pageKey, name); const detail = $('detail'); detail.classList.add('active'); detail.setAttribute('aria-hidden','false'); }
-
-    // SVG load and handlers (unchanged behavior)
-    const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Seoul_districts.svg';
-    async function loadSVG(){ const container = $('svg-container'); if(!container) return; try{ const res = await fetch(SVG_URL); if(!res.ok) throw new Error('SVG fetch failed: '+res.status); const text = await res.text(); container.innerHTML = text; const svg = container.querySelector('svg'); if(svg){ svg.classList.add('seoul-map'); attachDistrictHandlers(svg); } }catch(err){ console.warn('SVG load failed, fallback', err); container.innerHTML = '<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg"><g id="districts"><path id="jongno" class="district" data-name="종로구" d="M220,120 L380,110 L420,200 L310,240 L230,200 Z" /></g></svg>'; const svg = container.querySelector('svg'); if(svg) attachDistrictHandlers(svg); }}
-
-    function attachDistrictHandlers(svg){ try{ const nodes = svg.querySelectorAll('[id]'); nodes.forEach(n=>{ if(!n.classList.contains('district')) n.classList.add('district'); n.style.touchAction='manipulation'; n.addEventListener('click', (e)=>{ e.preventDefault(); const id = n.id || ''; const name = n.getAttribute('data-name') || n.getAttribute('inkscape:label') || n.getAttribute('name') || id; openDistrictDetail(id || name, name); }); n.addEventListener('pointerenter', ()=> n.setAttribute('data-hover','1')); n.addEventListener('pointerleave', ()=> n.removeAttribute('data-hover')); }); const parent = svg.parentElement || svg; enablePanZoom(parent); }catch(e){ console.warn('attachDistrictHandlers error', e); } }
-
-    function enablePanZoom(el){ let translateX = 0, translateY = 0, scale = 1; let pointers = new Map(); let isDown = false; const setTransform = ()=>{ el.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`; };
-      el.addEventListener('pointerdown', (e)=>{ el.setPointerCapture && el.setPointerCapture(e.pointerId); pointers.set(e.pointerId, {x:e.clientX,y:e.clientY}); if(pointers.size === 1){ isDown = true; el._startX = e.clientX - translateX; el._startY = e.clientY - translateY; el.classList.add('grabbing'); } });
-      el.addEventListener('pointermove', (e)=>{ if(pointers.has(e.pointerId)) pointers.set(e.pointerId,{x:e.clientX,y:e.clientY}); if(pointers.size === 1 && isDown){ translateX = e.clientX - el._startX; translateY = e.clientY - el._startY; setTransform(); } else if(pointers.size === 2){ const pts = Array.from(pointers.values()); const d = Math.hypot(pts[0].x-pts[1].x, pts[0].y-pts[1].y); if(!el._lastD) el._lastD = d; const delta = d / el._lastD; el._lastD = d; scale = Math.min(3, Math.max(0.6, scale * delta)); setTransform(); } });
-      el.addEventListener('pointerup', (e)=>{ el.releasePointerCapture && el.releasePointerCapture(e.pointerId); pointers.delete(e.pointerId); if(pointers.size===0){ isDown=false; el._lastD = null; el.classList.remove('grabbing'); } });
-      el.addEventListener('pointercancel', ()=>{ pointers.clear(); isDown=false; el.classList.remove('grabbing'); });
-      el.addEventListener('wheel', (e)=>{ e.preventDefault(); const delta = -e.deltaY * 0.001; scale = Math.min(3, Math.max(0.6, scale + delta)); setTransform(); });
-    }
-
-    // close detail
-    $('close-detail') && $('close-detail').addEventListener('click', ()=>{ const detail = $('detail'); detail.classList.remove('active'); detail.setAttribute('aria-hidden','true'); });
-
-    // Careers data and page generator
-    const careers = [
-      {id:'c2022-2', title:'서울영상공모전 수상(2022)', desc:'서울영상공모전에서 수상하며 영상 제작 역량을 인정받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-2', title:'부산광역시 뉴미디어멤버스, 부산광역시장 표창(2023)', desc:'부산광역시 서포터즈로 활동하면서, 제2 수도로써 부산의 다양한 면모를 널리 알리고, 이 공로를 인정받아 부산광역시장 표창을 받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-3', title:'TikTok 포토 크리에이터 활동(2023)', desc:'TikTok에서 포토 크리에이터로 활동하며 다양한 사진 컨텐츠를 공유함.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-4', title:'궁금했어, 기후변화(나무생각)에 사진 수록', desc:'기상청 기상기후공모전 수상작인 "삐뽀삐뽀,정준우"를 출판사의 요청으로 청소년 도서에 수록함.', img:'assets/IMG_9121.svg'},
-      {id:'c2023-5', title:'한국청소년사진공모전 은상·동상', img:'assets/IMG_9121.svg'},
-      {id:'c2023-6', title:'강남구 영상 공모전 1·2회 베스트제작상', desc:'다양한 강남의 모습을 숏폼으로 담았음.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-2', title:'영등포구 SNS미디어기자단, 영등포구청장 표창', desc:'영등포구청의 SNS 미디어 기자단 활동으로 표창을 받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-3', title:'서울시 제작지원: 서울세계불꽃축제 협업 촬영', desc:'서울세계불꽃축제 공식 촬영에 참여하여 제작 지원을 받음.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-4', title:'서울특별시 챌린지 서울상(1등상)', desc:'"특별함이 일상이 되는 순간" 챌린지에서 서울상을 수상 (1등).', img:'assets/IMG_9121.svg'},
-      {id:'c2024-5', title:'한국청소년 사진제 우수상', desc:'한국사진협회 주최의 한국청소년 사진제에서 우수상을 수상.', img:'assets/IMG_9121.svg'},
-      {id:'c2024-6', title:'서울시민기자', desc:'서울시민기자로 활동하며 지역 소식을 기록.', img:'assets/IMG_9121.svg'}
-    ];
-
-    function openCareerPage(id){ const c = careers.find(x=>x.id===id); if(!c) return alert('해당 경력 정보를 찾을 수 없습니다.'); const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${encodeURIComponent(c.title)}</title><style>body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071226,#081025);color:#eaf2fb;padding:24px;display:flex;align-items:center;justify-content:center} .card{max-width:880px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:28px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.6)} h1{margin:0 0 12px 0;font-size:28px} p{color:#c9dbe8;line-height:1.6} .media{display:flex;gap:16px;align-items:flex-start;margin-top:16px} .media img{width:320px;max-width:40%;height:auto;border-radius:12px;object-fit:cover} @media(max-width:600px){.media{flex-direction:column}.media img{max-width:100%;width:100%}}</style></head><body><div class="card"><h1>${escapeHtml(c.title)}</h1><p>${escapeHtml(c.desc)}</p><div class="media"><img src="${c.img}" alt="${escapeHtml(c.title)}"><div style="flex:1"></div></div></div></body></html>`; const blob = new Blob([html], {type:'text/html'}); const url = URL.createObjectURL(blob); window.open(url,'_blank'); }
-
-    function escapeHtml(s){ return (s+'').replace(/[&<>\"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":"&#39;"}[ch]; }); }
-    // attach click handlers for profile links (delegation)
-    document.addEventListener('click', function(e){ const a = e.target.closest && e.target.closest('.career-link'); if(a){ e.preventDefault(); const id = a.getAttribute('data-id'); openCareerPage(id); } }, false);
-
-    // 한영 토글 (간단한 i18n)
-    const btnKo = document.getElementById('btn-ko');
-    const btnEn = document.getElementById('btn-en');
-    const i18n = {
-      ko: {
-        card: '명함', portfolio: '작품 활동', contact: 'Contact', upload: '업로드', vcard: 'vCard 다운로드', copy: '이메일 복사'
-      },
-      en: {
-        card: 'Card', portfolio: 'Portfolio', contact: 'Contact', upload: 'Upload', vcard: 'Download vCard', copy: 'Copy email'
-      }
-    };
-    function applyLang(lang){
-      if(!i18n[lang]) return;
-      // menu buttons
-      document.getElementById('tab-card').textContent = i18n[lang].card || 'Card';
-      document.getElementById('tab-portfolio').textContent = i18n[lang].portfolio || 'Portfolio';
-      // contact heading
-      const contactHeading = document.querySelector('.hero-right h3') || null;
-      if(contactHeading) contactHeading.textContent = i18n[lang].contact;
-      // other buttons
-      const vbtn = document.getElementById('download-vcard'); if(vbtn) vbtn.textContent = i18n[lang].vcard;
-      const cbtn = document.getElementById('copy-email'); if(cbtn) cbtn.textContent = i18n[lang].copy;
-      // active state
-      if(lang === 'ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); } else { btnEn.classList.add('active'); btnKo.classList.remove('active'); }
-    }
-    btnKo && btnKo.addEventListener('click', ()=>applyLang('ko'));
-    btnEn && btnEn.addEventListener('click', ()=>applyLang('en'));
-    // set initial language
-    (function(){ const saved = localStorage.getItem('site_lang') || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'ko'); applyLang(saved); })();
-
-<!-- 프로필 -->
-<img id="portrait-img" src="assets/IMG_9121.jpeg" alt="정준우 사진">
-
-
+    function openDistrictDetail(id,name){ const pageKey = getOrAssignSubpageForDistrict(id,name); $('detail-title').textContent = name || pageKey; renderDetailContent(pageKey,name); const d=$('detail'); d.classList.add('active'); d.setAttribute('aria-hidden','false'); }
 
     // init
-    ensureSubpages(25);
-    loadSVG();
-    showCard();
-
-    // load portrait from IDB or repo
-    loadPortrait();
+    ensureSubpages(25); loadSVG(); showCard();
   </script>
 </body>
 </html>
