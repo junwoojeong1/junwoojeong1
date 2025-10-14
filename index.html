@@ -18,6 +18,13 @@
       font-style: normal;
       font-display: swap;
     }
+    @font-face {
+      font-family: 'NanumSquareNeo';
+      src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
   </style>
 
   <style>
@@ -100,7 +107,7 @@
     .meta .role{color:var(--muted);font-size:13px}
     .desc{color:var(--muted);font-family:'NanumSquareRound',system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans KR',sans-serif;line-height:1.6}
 
-    .profile-box{margin-top:12px;padding:10px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(255,255,255,0.84));border:1px solid rgba(16,24,40,0.03);box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+    .profile-box{margin-top:20px;padding:10px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(255,255,255,0.84));border:1px solid rgba(16,24,40,0.03);box-shadow:0 6px 18px rgba(16,24,40,0.04)}
     body.dark .profile-box{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.45)}
 
     .contact{display:flex;flex-direction:column;gap:12px;margin-top:14px}
@@ -156,7 +163,7 @@
     <main class="card fade-in visible" id="card-view" role="main" aria-labelledby="title">
       <section class="hero">
         <div class="portrait-wrap">
-          <img id="portrait-img" src="assets/IMG_9121.JPEG" alt="정준우 프로필" onerror="this.style.display='none'">
+          <img id="portrait-img" src="assets/IMG_9121.JPEG" alt="정준우프로필" onerror="this.style.display='none'">
         </div>
       </section>
 
@@ -169,29 +176,29 @@
         <div class="profile-box">
           <p class="desc" id="desc" style="margin:0 0 36px 0;white-space:pre-wrap">다양한 서울을 사진과 영상으로 표현합니다.<br><br>활동은 하단의 인스타그램에서 확인하실 수 있습니다.<br>문의사항은 하단의 이메일로 부탁드립니다.</p>
 
-          <h3 style="margin:0 0 0px 0;color:var(--muted);font-size:14px">Profile</h3>
+          <h3 id="profile-heading" style="margin:0 0 0px 0;color:var(--muted);font-size:14px;font-family:'NanumSquareNeo',sans-serif;font-weight:700">Profile</h3>
           <div id="profile-list" aria-label="프로필 목록" style="min-height:10px;padding:4px;border-radius:8px;border:1px dashed rgba(16,24,40,0.04);color:var(--muted);white-space:pre-wrap;overflow:auto;margin-top:4px;">
             <ul style="list-style:none;margin:0;padding:4px 0 0 0;display:flex;flex-direction:column;gap:8px">
-              <li><a href="#" class="career-link" data-id="c2022-1" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px">2022</a></li>
-              <li><a href="#" class="career-link" data-id="c2022-2" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 서울영상공모전 수상</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-1" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px">2023</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-2" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-3" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> TikTok 포토 크리에이터 활동</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-4" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 청소년 도서에 사진 수록</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-5" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 한국청소년사진공모전 은상·동상</a></li>
-              <li><a href="#" class="career-link" data-id="c2023-6" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 강남구 영상 공모전 제1·2회 베스트제작상</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-1" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px">2024</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-2" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-3" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-4" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 서울특별시 특별함이일상이되는순간 챌린지 서울상(1등상)</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-5" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px"> 한국청소년 사진제 우수상</a></li>
-              <li><a href="#" class="career-link" data-id="c2024-6" style="font-family:'NanumSquareRound',serif;color:var(--muted);text-decoration:none;font-size:15px">2023-2025 서울시민기자</a></li>
+              <li><a href="#" class="career-link" data-id="c2022-1" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px">2022</a></li>
+              <li><a href="#" class="career-link" data-id="c2022-2" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 서울영상공모전 수상</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-1" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px">2023</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-2" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 부산광역시 뉴미디어멤버스, 부산광역시장 표창</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-3" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> TikTok 포토 크리에이터 활동</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-4" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 청소년 도서에 사진 수록</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-5" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 한국청소년사진공모전 은상·동상</a></li>
+              <li><a href="#" class="career-link" data-id="c2023-6" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 강남구 영상 공모전 제1·2회 베스트제작상</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-1" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px">2024</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-2" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 영등포구 SNS미디어기자단, 영등포구청장 표창</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-3" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 서울시 제작지원: 서울세계불꽃축제 협업 촬영</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-4" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 서울특별시 특별함이일상이되는순간 챌린지 서울상(1등상)</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-5" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px"> 한국청소년 사진제 우수상</a></li>
+              <li><a href="#" class="career-link" data-id="c2024-6" style="font-family:'NanumSquareRound',sans-serif;font-weight:normal;color:var(--muted);text-decoration:none;font-size:15px">2023-2025 서울시민기자</a></li>
             </ul>
             <small style="display:block;margin-top:0px;color:var(--muted)">각 항목을 누르면 세부 페이지가 뜹니다.</small>
           </div>
 
           <div class="contact" style="margin-top:12px">
-            <h3 style="margin:0;color:var(--muted);font-size:14px">Profile</h3>
+            <h3 id="contact-heading" style="margin:0;color:var(--muted);font-size:14px;font-family:'NanumSquareNeo',sans-serif;font-weight:700">Contact</h3> 
             <div class="chips">
               <a class="chip" id="email-link" href="mailto:luxetjun@naver.com">luxetjun@naver.com</a>
               <a class="chip" id="phone-link" href="tel:01026090250">010-2609-0250</a>
@@ -245,7 +252,7 @@
 
     // language toggle
     const btnKo = $('btn-ko'), btnEn = $('btn-en');
-    const i18n = { ko:{contact:'Contact',vcard:'vCard 다운로드',copy:'이메일 복사'}, en:{contact:'Contact',vcard:'Download vCard',copy:'Copy email'} };
+    const i18n = { ko:{contact:'Contact',vcard:'연락처 저장',copy:'이메일 복사'}, en:{contact:'Contact',vcard:'Download vCard',copy:'Copy email'} };
     function applyLang(lang){ if(!i18n[lang]) return; const ch = document.querySelector('.profile-box h3'); if(ch) ch.textContent = i18n[lang].contact; const vb = $('download-vcard'); if(vb) vb.textContent = i18n[lang].vcard; const cb = $('copy-email'); if(cb) cb.textContent = i18n[lang].copy; if(lang==='ko'){ btnKo.classList.add('active'); btnEn.classList.remove('active'); btnKo.setAttribute('aria-pressed','true'); btnEn.setAttribute('aria-pressed','false'); } else { btnEn.classList.add('active'); btnKo.classList.remove('active'); btnEn.setAttribute('aria-pressed','true'); btnKo.setAttribute('aria-pressed','false'); } localStorage.setItem('site_lang',lang); }
     btnKo && btnKo.addEventListener('click', ()=>applyLang('ko'));
     btnEn && btnEn.addEventListener('click', ()=>applyLang('en'));
